@@ -1,0 +1,1 @@
+// O ponto de entrada. um script enxuto que reúne o estado e a interface para inicializar o componente na página.

@@ -1,0 +1,1 @@
+// O motor da interação. Aqui construiremos funções essenciais de acessibilidade, como o controle de abertura e fechamento, a armadilha de foco (Focus trap) para quem navega por teclado, o retorno do foco ao botão de origem e o mapeamento dos eventos de clique.

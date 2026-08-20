@@ -1,0 +1,1 @@
+// A fonte única de verdade dos dados. Vai conter o objeto padrão de configuração de acessibilidade, bem como os dados de estado atuais. O estado será atualizado com base nas ações do usuário e nos eventos do sistema, garantindo que a interface seja acessível e responsiva às necessidades dos usuários. Gravação no localStorage.
