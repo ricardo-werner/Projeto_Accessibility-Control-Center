@@ -1,1 +1,53 @@
 // Reset Global do site. Remove todos os estilos padrão do navegador, garantindo uma base consistente para o desenvolvimento da interface. Isso ajuda a evitar inconsistências visuais entre diferentes navegadores e dispositivos, proporcionando uma experiência de usuário mais uniforme e previsível.
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 62.5%; /* 1rem = 10px*/
+}
+
+body {
+    line-height: 1.5;
+    font-family: sans-serif;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    /* As regras de border, outline e background foram removidas daqui intencionalmente para evitar a remoção do foco padrão do navegador. A estilização do foco é feita abaixo com :focus-visible para garantir a acessibilidade. */
+}
+
+button {
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul,
+ol {
+    list-style: none;
+}
