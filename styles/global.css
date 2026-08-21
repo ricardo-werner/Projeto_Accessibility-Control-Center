@@ -1,1 +1,11 @@
-// Estilos globais da aplicação, como tipografia, cores e espaçamentos.
+/* Estilos globais da aplicação, como tipografia, cores e espaçamentos. */
+
+/* styles/global.css */
+body {  
+  /* Cores de fundo provisórias para teste de contraste */
+  background-color: #f8f9fa;
+  color: #1a1a1a;
+  
+  /* Transição suave ao trocar de fonte/tamanho */
+  transition: font-size 0.3s ease, line-height 0.3s ease;
+}
