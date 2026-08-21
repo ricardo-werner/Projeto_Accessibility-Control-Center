@@ -1,1 +1,31 @@
 // O núcleo dos tokens do componente. Vai armazenar exclusivamente as CSS Custom Properties (variáveis CSS) que serão utilizadas em todo o projeto. Controlarão as paletas de alto contraste, multiplicadores de escala de fonte, espaçamentos e variáveis de foco.
+
+/* vanilla/css/variables.css */
+
+:root {
+  /* 1. Famílias Tipográficas */
+  --a11y-font-family-base: 'Inter', sans-serif;
+  --a11y-font-family-hyperlegible: 'Atkinson Hyperlegible', sans-serif;
+  --a11y-font-family-dyslexia: 'Lexend', sans-serif;
+
+  /* A variável que o corpo da página de fato usará */
+  --font-family-current: var(--a11y-font-family-base);
+
+  /* 2. Escala e Tamanho (Atendendo a regra >= 16px) */
+  --a11y-font-base-size: 16px;
+  --a11y-font-scale: 1; /* Multiplicador manipulado pelo JS */
+  
+  /* 3. Espaçamentos (Atendendo as práticas de Dislexia e Baixa Visão) */
+  --a11y-line-height-base: 1.5; /* Padrão WCAG */
+  --a11y-letter-spacing-base: normal;
+  --a11y-word-spacing-base: normal;
+}
+
+/* Quando aplicarmos no body da landing page: */
+body {
+  font-family: var(--font-family-current);
+  font-size: calc(var(--a11y-font-base-size) * var(--a11y-font-scale));
+  line-height: var(--a11y-line-height-base);
+  letter-spacing: var(--a11y-letter-spacing-base);
+  word-spacing: var(--a11y-word-spacing-base);
+}
