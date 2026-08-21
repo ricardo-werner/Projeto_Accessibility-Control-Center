@@ -1,1 +1,110 @@
-// Os estilos estruturais e visuais do próprio modal(layout, botões internos, accordions), garantindo que ele seja responsivo e limpo, isolando-o para não quebrar o CSS principal do site. Acessibilidade e usabilidade são prioridades, com foco em contraste, legibilidade e navegação intuitiva. 
+/* Os estilos estruturais e visuais do próprio modal(layout, botões internos, accordions), garantindo que ele seja responsivo e limpo, isolando-o para não quebrar o CSS principal do site. Acessibilidade e usabilidade são prioridades, com foco em contraste, legibilidade e navegação intuitiva. */
+
+/* styles/accessibility.css */
+
+/* ----------------------------- */
+/* 1. ESTRUTURA DO MODAL         */
+/* ----------------------------- */
+.a11y-modal {
+  /* Centralização e tamanho */
+  margin: auto;
+  width: 90%;
+  max-width: 500px;
+  padding: 1.5rem;
+  
+  /* Visual */
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  
+  /* Acessibilidade visual */
+  color: #0f172a;
+}
+
+/* Fundo escuro atrás do modal (Nativo do <dialog>) */
+.a11y-modal::backdrop {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(4px); /* Toque moderno */
+}
+
+/* ----------------------------- */
+/* 2. CABEÇALHO DO MODAL         */
+/* ----------------------------- */
+.a11y-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.a11y-modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Botão Fechar */
+#btn-close-a11y {
+  background: transparent;
+  border: 2px solid transparent;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  color: #475569;
+}
+
+#btn-close-a11y:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* ----------------------------- */
+/* 3. BOTÕES DE ATALHO           */
+/* ----------------------------- */
+.a11y-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.a11y-quick-settings-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.a11y-quick-btn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #334155;
+  transition: all 0.2s ease;
+}
+
+/* Estado Ativado (aria-pressed="true") */
+.a11y-quick-btn[aria-pressed="true"] {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #1e40af;
+}
+
+/* ----------------------------- */
+/* 4. ACESSIBILIDADE DE FOCO     */
+/* ----------------------------- */
+/* Garante que a navegação por teclado seja super visível */
+:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}
