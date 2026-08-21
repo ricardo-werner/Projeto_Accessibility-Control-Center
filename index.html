@@ -1,11 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+
+    <!-- Content Security Policy (CSP) -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self'; 
+        script-src 'self' https://vlibras.gov.br *.vlibras.gov.br https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval' blob:; 
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
+        font-src 'self' https://fonts.gstatic.com https://vlibras.gov.br https://cdn.jsdelivr.net; 
+        img-src 'self' data: https://vlibras.gov.br *.vlibras.gov.br https://cdn.jsdelivr.net; 
+        connect-src 'self' https://vlibras.gov.br *.vlibras.gov.br https://cdn.jsdelivr.net;
+        worker-src 'self' blob:;"
+    />
+
+    <!--SEO-->
+    <title>Projeto Accessibility Control Center</title>
+    <meta
+      name="description"
+      content="Projeto Accessibility Control Center - guia prático com ferramentas e fluxos de trabalho para criar produtos digitais acessíveis para todos, por padrão"
+    />
+    <meta
+      name="keywords"
+      content="acessibilidade, inclusão digital, a11y, web acessível, design acessível, desenvolvimento acessível, WCAG"
+    />
+    <meta name="author" content="Ricardo Werner" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Portuguese" />
+
+
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="#"
+    />
+
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./styles/index.css">  
 </head>
+
+
 <body>
+  <!-- 1. SKIP LINK: Essencial para acessibilidade motora e visual -->
+  <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
+
+  <!-- 2. GATILHO DA CENTRAL: Primeiro elemento interativo após o skip link -->
+  <button id="btn-open-a11y" class="a11y-trigger-btn" aria-haspopup="dialog" aria-expanded="false">
+    Preferências de Acessibilidade
+  </button>
+
+  <!-- 3. HEADER DA PÁGINA (Normal) -->
+  <header>
+    <h1>Minha Landing Page Acessível</h1>
+    <nav>
+      <!-- Links de navegação -->
+    </nav>
+  </header>
+
+  <!-- 4. CONTEÚDO PRINCIPAL -->
+  <main id="conteudo-principal">
+    <section>
+      <h2>Bem-vindo</h2>
+      <p>Este é o conteúdo de teste para validarmos o contraste e a tipografia.</p>
+    </section>
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 5. COMPONENTE: CENTRAL DE ACESSIBILIDADE   -->
+  <!-- ========================================== -->
+  <dialog id="a11y-modal" class="a11y-modal" aria-labelledby="a11y-modal-title">
+    
+    <div class="a11y-modal-header">
+      <!-- Nome acessível referenciado pelo aria-labelledby no <dialog> -->
+      <h2 id="a11y-modal-title">Personalização da Experiência</h2>
+      
+      <button id="btn-close-a11y" aria-label="Fechar configurações de acessibilidade">
+        X
+      </button>
+    </div>
+    
+    <div class="a11y-modal-body">
+      <!-- Primeira Fatia: Configuração Rápida -->
+      <!-- Dentro de <div class="a11y-modal-body"> no seu index.html -->
+      <fieldset class="a11y-fieldset">
+        <legend class="sr-only">Configurações Rápidas</legend>
+        
+        <div class="a11y-quick-settings-grid">
+          <!-- Atalho 1: Facilitar Leitura (Foco em Dislexia e Carga Cognitiva) -->
+          <button type="button" class="a11y-quick-btn" id="btn-quick-read" aria-pressed="false">
+            <span class="icon" aria-hidden="true">📖</span>
+            <span class="label">Facilitar Leitura</span>
+          </button>
+
+          <!-- Atalho 2: Aumentar Visibilidade (Foco em Baixa Visão e Daltonismo) -->
+          <button type="button" class="a11y-quick-btn" id="btn-quick-visibility" aria-pressed="false">
+            <span class="icon" aria-hidden="true">👁️</span>
+            <span class="label">Aumentar Visibilidade</span>
+          </button>
+
+          <!-- Atalho 3: Reduzir Distrações (Foco em TDAH e Epilepsia) -->
+          <button type="button" class="a11y-quick-btn" id="btn-quick-focus" aria-pressed="false">
+            <span class="icon" aria-hidden="true">🎯</span>
+            <span class="label">Reduzir Distrações</span>
+          </button>
+        </div>
+      </fieldset>
+      
+      <fieldset class="a11y-fieldset">
+        <legend>Configuração Rápida (Atalhos)</legend>
+        
+        <div class="a11y-quick-settings-grid">
+          <!-- Os botões funcionais entrarão aqui -->
+        </div>
+      </fieldset>
+      
+      <!-- O restante (Personalizado) entrará depois -->
+    </div>
+
+  </dialog>
+
+  <!-- Scripts -->
+  <script type="module" src="js/index.js"></script>
+</body>
+</html>
   
 </body>
 </html>
