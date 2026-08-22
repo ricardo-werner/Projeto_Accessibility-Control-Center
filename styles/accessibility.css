@@ -238,3 +238,34 @@
   /* Reduz saturação e adiciona um tom sépia leve para conforto visual */
   filter: sepia(20%) saturate(70%) opacity(90%) !important;
 }
+
+/* ----------------------------- */
+/* 8. RODAPÉ E RESET             */
+/* ----------------------------- */
+.a11y-modal-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: center;
+}
+
+.a11y-reset-btn {
+  background: transparent;
+  color: #64748b; /* Cinza médio */
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: underline;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.a11y-reset-btn:hover,
+.a11y-reset-btn:focus-visible {
+  color: #0f172a;
+  background-color: #f1f5f9;
+  outline: 2px solid #06B6D4; /* Acessibilidade de teclado */
+}
