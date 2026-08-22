@@ -1,7 +1,7 @@
 // O motor da interação. Aqui construiremos funções essenciais de acessibilidade, como o controle de abertura e fechamento, a armadilha de foco (Focus trap) para quem navega por teclado, o retorno do foco ao botão de origem e o mapeamento dos eventos de clique.
 
 // scripts/accessibility-ui.js
-import { getState, saveState } from './accessibility-state.js';
+import { getState, saveState, defaultState } from './accessibility-state.js';
 
 const rootElement = document.documentElement;
 
@@ -256,4 +256,18 @@ export function initThemeSettings() {
       });
     });
   });
+}
+// Inicializa o botão de restauração das configurações padrão
+export function initResetButton() {
+  const btnReset = document.getElementById('btn-reset-a11y');
+
+  if (btnReset) {
+    btnReset.addEventListener('click', () => {
+      // 1. Sobrescreve o LocalStorage com o estado original zerado
+      saveState(defaultState);
+
+      // 2. Recarrega a página para limpar toda a árvore do DOM instantaneamente
+      window.location.reload();
+    });
+  }
 }
