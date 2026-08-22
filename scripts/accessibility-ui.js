@@ -13,15 +13,25 @@ export const applyCSSVariables = (state) => {
       '--font-family-current',
       'var(--a11y-font-family-dyslexia)'
     );
-    rootElement.style.setProperty('--a11y-line-height-base', '1.8');
+    rootElement.style.setProperty(
+      '--a11y-line-height-base',
+      '1.8'
+    );
   } else if (!state.quickSettings.highVisibility) {
-    rootElement.style.removeProperty('--font-family-current');
-    rootElement.style.removeProperty('--a11y-line-height-base');
+    rootElement.style.removeProperty(
+      '--font-family-current'
+    );
+    rootElement.style.removeProperty(
+      '--a11y-line-height-base'
+    );
   }
 
   // 2. Aumentar Visibilidade (Baixa Visão / Daltonismo)
   if (state.quickSettings.highVisibility) {
-    rootElement.style.setProperty('--a11y-font-scale', '1.2');
+    rootElement.style.setProperty(
+      '--a11y-font-scale',
+      '1.2'
+    );
     rootElement.style.setProperty(
       '--font-family-current',
       'var(--a11y-font-family-hyperlegible)'
@@ -35,7 +45,9 @@ export const applyCSSVariables = (state) => {
 
     // Se 'Facilitar Leitura' também estiver desligada, remove a fonte personalizada
     if (!state.quickSettings.readingEase) {
-      rootElement.style.removeProperty('--font-family-current');
+      rootElement.style.removeProperty(
+        '--font-family-current'
+      );
     }
   }
 
@@ -44,6 +56,16 @@ export const applyCSSVariables = (state) => {
     rootElement.classList.add('reduce-motion');
   } else {
     rootElement.classList.remove('reduce-motion');
+  }
+
+  // Reduzir Distrações
+  if (state.quickSettings.reducedDistraction) {
+    rootElement.setAttribute(
+      'data-reduce-distractions',
+      'true'
+    );
+  } else {
+    rootElement.removeAttribute('data-reduce-distractions');
   }
 };
 
