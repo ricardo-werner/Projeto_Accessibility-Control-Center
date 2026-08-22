@@ -1,108 +1,163 @@
 // O motor da interação. Aqui construiremos funções essenciais de acessibilidade, como o controle de abertura e fechamento, a armadilha de foco (Focus trap) para quem navega por teclado, o retorno do foco ao botão de origem e o mapeamento dos eventos de clique.
 
-// vanilla/js/accessibility-ui.js
-import {
-  getState,
-  saveState,
-} from './accessibility-state.js';
+// scripts/accessibility-ui.js
+import { getState, saveState } from './accessibility-state.js';
 
 const rootElement = document.documentElement;
 
-// Mapeia os atalhos para as alterações granulares nas variáveis CSS
-// scripts/accessibility-ui.js
-
-// scripts/accessibility-ui.js
-
-const applyCSSVariables = (state) => {
-  // Facilitar Leitura
+// Mapeia os estados para as alterações nas variáveis CSS
+export const applyCSSVariables = (state) => {
+  // 1. Facilitar Leitura (Dislexia / Carga Cognitiva)
   if (state.quickSettings.readingEase) {
-    rootElement.style.setProperty('--font-family-current', 'var(--a11y-font-family-dyslexia)');
+    rootElement.style.setProperty(
+      '--font-family-current',
+      'var(--a11y-font-family-dyslexia)'
+    );
     rootElement.style.setProperty('--a11y-line-height-base', '1.8');
-  } else {
-    // Quando desativado, removemos o estilo inline para o :root voltar a agir
+  } else if (!state.quickSettings.highVisibility) {
     rootElement.style.removeProperty('--font-family-current');
     rootElement.style.removeProperty('--a11y-line-height-base');
   }
 
-  // Aumentar Visibilidade
+  // 2. Aumentar Visibilidade (Baixa Visão / Daltonismo)
   if (state.quickSettings.highVisibility) {
     rootElement.style.setProperty('--a11y-font-scale', '1.2');
-    rootElement.style.setProperty('--font-family-current', 'var(--a11y-font-family-hyperlegible)');
+    rootElement.style.setProperty(
+      '--font-family-current',
+      'var(--a11y-font-family-hyperlegible)'
+    );
   } else {
-    // Retorna para a escala definida pelo usuário (que faremos no slider)
-    rootElement.style.setProperty('--a11y-font-scale', state.granular.fontScale);
-    
-    // Só remove a fonte se a 'Facilitar Leitura' também estiver desligada
+    // Retorna para a escala definida pelo usuário (via slider ou padrão)
+    rootElement.style.setProperty(
+      '--a11y-font-scale',
+      state.granular.fontScale
+    );
+
+    // Se 'Facilitar Leitura' também estiver desligada, remove a fonte personalizada
     if (!state.quickSettings.readingEase) {
       rootElement.style.removeProperty('--font-family-current');
     }
   }
+
+  // 3. Reduzir Distrações (TDAH / Epilepsia / Animações)
+  if (state.quickSettings.reducedDistraction) {
+    rootElement.classList.add('reduce-motion');
+  } else {
+    rootElement.classList.remove('reduce-motion');
+  }
 };
 
+// Inicializa os botões e regras da Configuração Rápida
 export function initQuickSettings() {
   const btnRead = document.getElementById('btn-quick-read');
-  const btnVis = document.getElementById(
-    'btn-quick-visibility'
-  );
+  const btnVis = document.getElementById('btn-quick-visibility');
+  const btnFocus = document.getElementById('btn-quick-focus');
+
+  const state = getState();
 
   // Sincroniza botões com o estado inicial
-  const state = getState();
-  btnRead.setAttribute(
-    'aria-pressed',
-    state.quickSettings.readingEase
-  );
-  btnVis.setAttribute(
-    'aria-pressed',
-    state.quickSettings.highVisibility
-  );
+  if (btnRead) {
+    btnRead.setAttribute('aria-pressed', String(state.quickSettings.readingEase));
+    btnRead.addEventListener('click', () => {
+      const isPressed = btnRead.getAttribute('aria-pressed') === 'true';
+      const newState = !isPressed;
+      btnRead.setAttribute('aria-pressed', String(newState));
+
+      const updatedState = saveState({
+        quickSettings: {
+          ...getState().quickSettings,
+          readingEase: newState,
+        },
+      });
+
+      applyCSSVariables(updatedState);
+    });
+  }
+
+  if (btnVis) {
+    btnVis.setAttribute('aria-pressed', String(state.quickSettings.highVisibility));
+    btnVis.addEventListener('click', () => {
+      const isPressed = btnVis.getAttribute('aria-pressed') === 'true';
+      const newState = !isPressed;
+      btnVis.setAttribute('aria-pressed', String(newState));
+
+      const updatedState = saveState({
+        quickSettings: {
+          ...getState().quickSettings,
+          highVisibility: newState,
+        },
+      });
+
+      // Atualiza também o slider se existir
+      const slider = document.getElementById('font-scale-slider');
+      if (slider) {
+        slider.value = newState ? '1.2' : String(updatedState.granular.fontScale);
+      }
+
+      applyCSSVariables(updatedState);
+    });
+  }
+
+  if (btnFocus) {
+    btnFocus.setAttribute(
+      'aria-pressed',
+      String(state.quickSettings.reducedDistraction)
+    );
+    btnFocus.addEventListener('click', () => {
+      const isPressed = btnFocus.getAttribute('aria-pressed') === 'true';
+      const newState = !isPressed;
+      btnFocus.setAttribute('aria-pressed', String(newState));
+
+      const updatedState = saveState({
+        quickSettings: {
+          ...getState().quickSettings,
+          reducedDistraction: newState,
+        },
+      });
+
+      applyCSSVariables(updatedState);
+    });
+  }
+
   applyCSSVariables(state);
-
-  // Evento: Facilitar Leitura
-  btnRead.addEventListener('click', () => {
-    const isPressed =
-      btnRead.getAttribute('aria-pressed') === 'true';
-    const newState = !isPressed;
-
-    btnRead.setAttribute('aria-pressed', newState);
-
-    const updatedState = saveState({
-      quickSettings: {
-        ...getState().quickSettings,
-        readingEase: newState,
-      },
-    });
-
-    applyCSSVariables(updatedState);
-  });
-
-  // Evento: Aumentar Visibilidade
-  btnVis.addEventListener('click', () => {
-    const isPressed =
-      btnVis.getAttribute('aria-pressed') === 'true';
-    const newState = !isPressed;
-
-    btnVis.setAttribute('aria-pressed', newState);
-
-    const updatedState = saveState({
-      quickSettings: {
-        ...getState().quickSettings,
-        highVisibility: newState,
-      },
-    });
-
-    applyCSSVariables(updatedState);
-  });
 }
 
-// vanilla/js/accessibility-ui.js (Adicionar ao final)
+// Inicializa configurações personalizadas (sliders, granular)
+export function initCustomSettings() {
+  const slider = document.getElementById('font-scale-slider');
+  const state = getState();
 
+  if (slider) {
+    // Sincroniza o valor inicial do slider
+    slider.value = state.quickSettings.highVisibility
+      ? '1.2'
+      : String(state.granular.fontScale);
+
+    slider.addEventListener('input', (event) => {
+      const newScale = parseFloat(event.target.value);
+
+      const updatedState = saveState({
+        granular: {
+          ...getState().granular,
+          fontScale: newScale,
+        },
+      });
+
+      applyCSSVariables(updatedState);
+    });
+  }
+}
+
+// Inicializa o controle do Modal (abrir/fechar/foco/backdrop)
 export function initModal() {
   const modal = document.getElementById('a11y-modal');
   const btnOpen = document.getElementById('btn-open-a11y');
   const btnClose = document.getElementById('btn-close-a11y');
-  
+
+  if (!modal || !btnOpen || !btnClose) return;
+
   // Variável para guardar de onde o usuário veio
-  let lastFocusedElement; 
+  let lastFocusedElement;
 
   // 1. Abrir Modal
   btnOpen.addEventListener('click', () => {
@@ -124,15 +179,15 @@ export function initModal() {
     }
   });
 
-  // 4. (Opcional) Fechar ao clicar fora do modal (no backdrop)
+  // 4. Fechar ao clicar fora do modal (no backdrop)
   modal.addEventListener('click', (event) => {
     const rect = modal.getBoundingClientRect();
-    const isInDialog = (
+    const isInDialog =
       rect.top <= event.clientY &&
       event.clientY <= rect.top + rect.height &&
       rect.left <= event.clientX &&
-      event.clientX <= rect.left + rect.width
-    );
+      event.clientX <= rect.left + rect.width;
+
     // Se o clique foi fora das dimensões do dialog, fecha
     if (!isInDialog) {
       modal.close();
