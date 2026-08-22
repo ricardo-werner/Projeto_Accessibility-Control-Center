@@ -214,3 +214,27 @@
   accent-color: #2563eb;
   cursor: pointer;
 }
+
+/* ----------------------------- */
+/* 7. REDUZIR DISTRAÇÕES         */
+/* ----------------------------- */
+
+/* Seleciona TODOS os elementos da página quando o modo está ativo */
+[data-reduce-distractions="true"] *,
+[data-reduce-distractions="true"] *::before,
+[data-reduce-distractions="true"] *::after {
+  /* Remove transições demoradas e animações em loop */
+  animation-play-state: paused !important;
+  transition: none !important;
+  
+  /* Desativa rolagem suave (evita enjoo/vertigem motora) */
+  scroll-behavior: auto !important;
+}
+
+/* Esfria e suaviza mídias (Imagens, Vídeos e Iframes) */
+[data-reduce-distractions="true"] img,
+[data-reduce-distractions="true"] video,
+[data-reduce-distractions="true"] iframe {
+  /* Reduz saturação e adiciona um tom sépia leve para conforto visual */
+  filter: sepia(20%) saturate(70%) opacity(90%) !important;
+}
