@@ -194,3 +194,44 @@ export function initModal() {
     }
   });
 }
+
+// scripts/accessibility-ui.js
+
+export function initThemeSettings() {
+  const themeRadios = document.querySelectorAll('input[name="a11y-theme"]');
+  const rootElement = document.documentElement;
+  
+  // 1. Sincroniza a interface com as preferências salvas no localStorage
+  const state = getState();
+  const currentTheme = state.granular.theme || 'default';
+  
+  themeRadios.forEach(radio => {
+    if (radio.value === currentTheme) {
+      radio.checked = true;
+    }
+  });
+  
+  // Aplica o tema visualmente logo ao carregar a página
+  if (currentTheme !== 'default') {
+    rootElement.setAttribute('data-theme', currentTheme);
+  }
+
+  // 2. Escuta quando o usuário escolhe uma nova paleta
+  themeRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      const selectedTheme = e.target.value;
+      
+      // Injeta ou remove o data-attribute na tag <html>
+      if (selectedTheme !== 'default') {
+        rootElement.setAttribute('data-theme', selectedTheme);
+      } else {
+        rootElement.removeAttribute('data-theme');
+      }
+      
+      // Salva a decisão na nossa fonte única de verdade
+      saveState({
+        granular: { ...getState().granular, theme: selectedTheme }
+      });
+    });
+  });
+}
