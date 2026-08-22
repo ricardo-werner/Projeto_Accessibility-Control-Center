@@ -9,15 +9,16 @@ export const defaultState = {
   quickSettings: {
     readingEase: false,
     highVisibility: false,
-    reducedDistraction: false
+    reducedDistraction: false,
   },
   granular: {
     fontScale: 1,
     fontFamily: 'var(--a11y-font-family-base)',
     lineHeight: 'var(--a11y-line-height-base)',
+    theme: 'default',
     contrastMode: 'default',
     reduceMotion: false
-  }
+  },
 };
 
 let currentState = { ...defaultState };
