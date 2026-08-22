@@ -1,7 +1,5 @@
 /* Estilos globais da aplicação, como tipografia, cores e espaçamentos. */
 
-/* styles/global.css */
-
 body {
   /* Mantemos o que já tínhamos para a tipografia */
   font-family: var(--font-family-current);
@@ -25,8 +23,45 @@ body {
   scroll-behavior: auto !important;
 }
 
+/* ----------------------------- */
+/* TIPOGRAFIA E DESTAQUES        */
+/* ----------------------------- */
+
+/* Títulos ganham a cor primária do tema escolhido */
+h1, h2, h3, h4 {
+  color: var(--a11y-primary-color);
+  margin-bottom: 1rem;
+  transition: color 0.3s ease;
+}
+
+/* Links ficam mais evidentes e acessíveis */
+a {
+  color: var(--a11y-primary-color);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: all 0.2s ease;
+}
+
+/* Interação com Links (Hover e Focus) */
+a:hover, 
+a:focus-visible {
+  color: var(--a11y-bg-color); /* Inverte a cor para o fundo */
+  background-color: var(--a11y-primary-color);
+  border-radius: 4px;
+  outline: none;
+}
+
+/* Um elemento de destaque genérico para testarmos contraste */
+strong, b {
+  color: var(--a11y-primary-color);
+}
+
 /* Classe utilitária de container para centralizar o conteúdo */
 .container {
   max-width: 1200px;
   margin: 0 auto;
 }
+
+
