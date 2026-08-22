@@ -7,23 +7,52 @@
   --a11y-font-family-dyslexia: 'Lexend', sans-serif;
 
   /* A variável que o corpo da página de fato usará */
-  --font-family-current:var(--a11y-font-family-base);
+  --font-family-current: var(--a11y-font-family-base);
 
   /* 2. Escala e Tamanho (Atendendo a regra >= 16px) */
-  --a11y-font-base-size: 1rem; /* 16px */ 
+  --a11y-font-base-size: 1rem; /* 16px */
   --a11y-font-scale: 1; /* Multiplicador manipulado pelo JS */
-  
+
   /* 3. Espaçamentos (Atendendo as práticas de Dislexia e Baixa Visão) */
   --a11y-line-height-base: 1.5; /* Padrão WCAG */
   --a11y-letter-spacing-base: normal;
   --a11y-word-spacing-base: normal;
+
+  /* 4. Cores Base (Tema Padrão da Landing Page) */
+  --a11y-bg-color: #ffffff;
+  --a11y-text-color: #1a1a1a;
+  --a11y-primary-color: #2563eb;
+  --a11y-border-color: #e2e8f0;
+}
+
+/* 5. Injeção de Temas via Data-Attribute */
+[data-theme='foco-calmo'] {
+  --a11y-bg-color: #f8fafc;
+  --a11y-text-color: #0f172a;
+  --a11y-primary-color: #2563eb;
+  --a11y-border-color: #e2e8f0;
+}
+
+[data-theme='contraste-universal'] {
+  --a11y-bg-color: #0b0f19;
+  --a11y-text-color: #ffffff;
+  --a11y-primary-color: #06b6d4;
+  --a11y-border-color: #1e293b;
+}
+
+[data-theme='alta-distincao'] {
+  --a11y-bg-color: #fffbeb;
+  --a11y-text-color: #334155;
+  --a11y-primary-color: #1e3a8a;
+  --a11y-border-color: #c2410c;
 }
 
 /* Quando aplicarmos no body da landing page: */
 body {
   font-family: var(--font-family-current);
-  font-size: calc(var(--a11y-font-base-size) * 
-  var(--a11y-font-scale));
+  font-size: calc(
+    var(--a11y-font-base-size) * var(--a11y-font-scale)
+  );
   line-height: var(--a11y-line-height-base);
   letter-spacing: var(--a11y-letter-spacing-base);
   word-spacing: var(--a11y-word-spacing-base);
