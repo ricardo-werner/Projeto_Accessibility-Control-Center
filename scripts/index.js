@@ -1,9 +1,7 @@
 // O ponto de entrada. um script enxuto que reúne o estado e a interface para inicializar o componente na página.
 
-// vanilla/js/index.js
-
 import { loadState } from './accessibility-state.js';
-import { initQuickSettings, initModal } from './accessibility-ui.js';
+import { initQuickSettings, initCustomSettings, initModal } from './accessibility-ui.js';
 
 // Aguarda o DOM estar completamente carregado
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,4 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // 3. Inicializa os botões e regras da Configuração Rápida
   initQuickSettings();
+
+  // 4. Inicializa os controles de Configurações Personalizadas (Sliders e granular)
+  initCustomSettings();
 });
