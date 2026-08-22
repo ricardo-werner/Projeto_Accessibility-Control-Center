@@ -3,6 +3,41 @@
 /* styles/accessibility.css */
 
 /* ----------------------------- */
+/* GATILHO DA CENTRAL (Botão de Abertura) */
+/* ----------------------------- */
+.a11y-trigger-btn {
+  /* Posicionamento - mantendo no topo para seguir o skip link */
+  margin: 1rem;
+  padding: 0.75rem 1.5rem;
+  
+  /* Cores baseadas na Paleta 1 (Foco Calmo) */
+  background-color: #0F172A; /* Azul Profundo */
+  color: #FFFFFF; /* Contraste AAA */
+  
+  /* Tipografia e Estrutura */
+  font-family: inherit; /* Herda a fonte dinâmica do projeto */
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  
+  /* Transições suaves (respeitando acessibilidade) */
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* Estado de Hover */
+.a11y-trigger-btn:hover {
+  background-color: #2563EB; /* Azul Escuro Suave da Paleta 1 */
+}
+
+/* Foco de Teclado explícito e acessível (Paleta 2) */
+.a11y-trigger-btn:focus-visible {
+  outline: 3px solid #06B6D4; /* Ciano Vibrante para alto contraste */
+  outline-offset: 4px;
+}
+
+/* ----------------------------- */
 /* 1. ESTRUTURA DO MODAL         */
 /* ----------------------------- */
 .a11y-modal {
@@ -107,4 +142,48 @@
 :focus-visible {
   outline: 3px solid #2563eb;
   outline-offset: 2px;
+}
+
+/* ----------------------------- */
+/* 5. CONFIGURAÇÕES PERSONALIZADAS */
+/* ----------------------------- */
+.a11y-custom-settings {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.a11y-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 1rem;
+}
+
+.a11y-control-group {
+  margin-bottom: 1.5rem;
+}
+
+.a11y-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #334155;
+}
+
+/* Container do Slider com os ícones de "A" */
+.a11y-slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.a11y-slider-icon.small { font-size: 1rem; }
+.a11y-slider-icon.large { font-size: 1.5rem; }
+
+/* O Slider (Range Input) */
+.a11y-slider {
+  flex: 1;
+  cursor: pointer;
+  accent-color: #2563eb; /* Cor moderna suportada nativamente para sliders */
 }
