@@ -1,11 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <head>
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
 
     <!-- Content Security Policy (CSP) -->
     <meta
@@ -34,7 +44,6 @@
     <meta name="robots" content="index, follow" />
     <meta name="language" content="Portuguese" />
 
-
     <!-- Favicon -->
     <link
       rel="shortcut icon"
@@ -42,110 +51,222 @@
       href="#"
     />
 
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="stylesheet" href="./styles/index.css">  
-</head>
+    <link rel="stylesheet" href="./styles/index.css" />
+  </head>
 
+  <body class="container">
+    <!-- 1. SKIP LINK: Essencial para acessibilidade motora e visual -->
+    <a href="#conteudo-principal" class="skip-link"
+      >Pular para o conteúdo principal</a
+    >
 
-<body class="container">
-  <!-- 1. SKIP LINK: Essencial para acessibilidade motora e visual -->
-  <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
+    <!-- 2. GATILHO DA CENTRAL: Primeiro elemento interativo após o skip link -->
+    <button
+      id="btn-open-a11y"
+      class="a11y-trigger-btn"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+    >
+      Preferências de Acessibilidade
+    </button>
 
-  <!-- 2. GATILHO DA CENTRAL: Primeiro elemento interativo após o skip link -->
-  <button id="btn-open-a11y" class="a11y-trigger-btn" aria-haspopup="dialog" aria-expanded="false">
-    Preferências de Acessibilidade
-  </button>
+    <!-- 3. HEADER DA PÁGINA (Normal) -->
+    <header>
+      <h1>Minha Landing Page Acessível</h1>
+      <nav>
+        <!-- Links de navegação -->
+      </nav>
+    </header>
 
-  <!-- 3. HEADER DA PÁGINA (Normal) -->
-  <header>
-    <h1>Minha Landing Page Acessível</h1>
-    <nav>
-      <!-- Links de navegação -->
-    </nav>
-  </header>
+    <!-- 4. CONTEÚDO PRINCIPAL -->
+    <main id="conteudo-principal">
+      <section>
+        <h2>Bem-vindo</h2>
+        <p>
+          Este é o conteúdo de teste para validarmos o
+          contraste e a tipografia.
+        </p>
+      </section>
+    </main>
 
-  <!-- 4. CONTEÚDO PRINCIPAL -->
-  <main id="conteudo-principal">
-    <section>
-      <h2>Bem-vindo</h2>
-      <p>Este é o conteúdo de teste para validarmos o contraste e a tipografia.</p>
-    </section>
-  </main>
+    <!-- ========================================== -->
+    <!-- 5. COMPONENTE: CENTRAL DE ACESSIBILIDADE   -->
+    <!-- ========================================== -->
+    <dialog
+      id="a11y-modal"
+      class="a11y-modal"
+      aria-labelledby="a11y-modal-title"
+    >
+      <div class="a11y-modal-header">
+        <!-- Nome acessível referenciado pelo aria-labelledby no <dialog> -->
+        <h2 id="a11y-modal-title">
+          Personalização da Experiência
+        </h2>
 
-  <!-- ========================================== -->
-  <!-- 5. COMPONENTE: CENTRAL DE ACESSIBILIDADE   -->
-  <!-- ========================================== -->
-  <dialog id="a11y-modal" class="a11y-modal" aria-labelledby="a11y-modal-title">
-    
-    <div class="a11y-modal-header">
-      <!-- Nome acessível referenciado pelo aria-labelledby no <dialog> -->
-      <h2 id="a11y-modal-title">Personalização da Experiência</h2>
-      
-      <button id="btn-close-a11y" aria-label="Fechar configurações de acessibilidade">
-        X
-      </button>
-    </div>
-    
-    <div class="a11y-modal-body">
-      <!-- Primeira Fatia: Configuração Rápida -->
-      <!-- Dentro de <div class="a11y-modal-body"> no seu index.html -->
-      <fieldset class="a11y-fieldset">
-        <legend class="sr-only">Configurações Rápidas</legend>
-        
-        <div class="a11y-quick-settings-grid">
-          <!-- Atalho 1: Facilitar Leitura (Foco em Dislexia e Carga Cognitiva) -->
-          <button type="button" class="a11y-quick-btn" id="btn-quick-read" aria-pressed="false">
-            <span class="icon" aria-hidden="true">📖</span>
-            <span class="label">Facilitar Leitura</span>
-          </button>
+        <button
+          id="btn-close-a11y"
+          aria-label="Fechar configurações de acessibilidade"
+        >
+          X
+        </button>
+      </div>
 
-          <!-- Atalho 2: Aumentar Visibilidade (Foco em Baixa Visão e Daltonismo) -->
-          <button type="button" class="a11y-quick-btn" id="btn-quick-visibility" aria-pressed="false">
-            <span class="icon" aria-hidden="true">👁️</span>
-            <span class="label">Aumentar Visibilidade</span>
-          </button>
+      <div class="a11y-modal-body">
+        <!-- Primeira Fatia: Configuração Rápida -->
+        <!-- Dentro de <div class="a11y-modal-body"> no seu index.html -->
+        <fieldset class="a11y-fieldset">
+          <legend class="sr-only">
+            Configurações Rápidas
+          </legend>
 
-          <!-- Atalho 3: Reduzir Distrações (Foco em TDAH e Epilepsia) -->
-          <button type="button" class="a11y-quick-btn" id="btn-quick-focus" aria-pressed="false">
-            <span class="icon" aria-hidden="true">🎯</span>
-            <span class="label">Reduzir Distrações</span>
-          </button>
-        </div>
-      </fieldset>
-      
-      <!-- O restante (Personalizado) entrará depois -->
-      <!-- Segunda Fatia: Configurações Personalizadas -->
-      <fieldset class="a11y-fieldset a11y-custom-settings">
-        <legend class="sr-only">Configurações Personalizadas</legend>
-        
-        <h3 class="a11y-section-title">Visão e Leitura</h3>
-        
-        <!-- Controle de Tamanho da Fonte -->
-        <div class="a11y-control-group">
-          <label for="font-scale-slider" class="a11y-label">Tamanho do Texto</label>
-          <div class="a11y-slider-wrapper">
-            <span aria-hidden="true" class="a11y-slider-icon small">A</span>
-            <input 
-              type="range" 
-              id="font-scale-slider" 
-              class="a11y-slider" 
-              min="1" 
-              max="2" 
-              step="0.1" 
-              value="1"
-              aria-valuemin="1"
-              aria-valuemax="2"
+          <div class="a11y-quick-settings-grid">
+            <!-- Atalho 1: Facilitar Leitura (Foco em Dislexia e Carga Cognitiva) -->
+            <button
+              type="button"
+              class="a11y-quick-btn"
+              id="btn-quick-read"
+              aria-pressed="false"
             >
-            <span aria-hidden="true" class="a11y-slider-icon large">A</span>
+              <span class="icon" aria-hidden="true"
+                >📖</span
+              >
+              <span class="label">Facilitar Leitura</span>
+            </button>
+
+            <!-- Atalho 2: Aumentar Visibilidade (Foco em Baixa Visão e Daltonismo) -->
+            <button
+              type="button"
+              class="a11y-quick-btn"
+              id="btn-quick-visibility"
+              aria-pressed="false"
+            >
+              <span class="icon" aria-hidden="true"
+                >👁️</span
+              >
+              <span class="label"
+                >Aumentar Visibilidade</span
+              >
+            </button>
+
+            <!-- Atalho 3: Reduzir Distrações (Foco em TDAH e Epilepsia) -->
+            <button
+              type="button"
+              class="a11y-quick-btn"
+              id="btn-quick-focus"
+              aria-pressed="false"
+            >
+              <span class="icon" aria-hidden="true"
+                >🎯</span
+              >
+              <span class="label">Reduzir Distrações</span>
+            </button>
           </div>
-        </div>
-      </fieldset>
-    </div>
+        </fieldset>
 
-  </dialog>
+        <!-- O restante (Personalizado) entrará depois -->
+        <!-- Segunda Fatia: Configurações Personalizadas -->
+        <fieldset
+          class="a11y-fieldset a11y-custom-settings"
+        >
+          <legend class="sr-only">
+            Configurações Personalizadas
+          </legend>
 
-  <!-- Scripts -->
-  <script type="module" src="./scripts/index.js"></script>
-</body>
+          <h3 class="a11y-section-title">
+            Visão e Leitura
+          </h3>
+
+          <!-- Controle de Tamanho da Fonte -->
+          <div class="a11y-control-group">
+            <label
+              for="font-scale-slider"
+              class="a11y-label"
+              >Tamanho do Texto</label
+            >
+            <div class="a11y-slider-wrapper">
+              <span
+                aria-hidden="true"
+                class="a11y-slider-icon small"
+                >A</span
+              >
+              <input
+                type="range"
+                id="font-scale-slider"
+                class="a11y-slider"
+                min="1"
+                max="2"
+                step="0.1"
+                value="1"
+                aria-valuemin="1"
+                aria-valuemax="2"
+              />
+              <span
+                aria-hidden="true"
+                class="a11y-slider-icon large"
+                >A</span
+              >
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Terceira Fatia: Esquema de Cores -->
+        <fieldset
+          class="a11y-fieldset a11y-custom-settings"
+        >
+          <legend class="sr-only">Esquema de Cores</legend>
+
+          <h3 class="a11y-section-title">
+            Cores e Contraste
+          </h3>
+
+          <div class="a11y-radio-group">
+            <label class="a11y-radio-label">
+              <input
+                type="radio"
+                name="a11y-theme"
+                value="default"
+                checked
+              />
+              Padrão do Sistema
+            </label>
+
+            <label class="a11y-radio-label">
+              <input
+                type="radio"
+                name="a11y-theme"
+                value="foco-calmo"
+              />
+              Foco Calmo (Baixo Estresse)
+            </label>
+
+            <label class="a11y-radio-label">
+              <input
+                type="radio"
+                name="a11y-theme"
+                value="contraste-universal"
+              />
+              Contraste Universal (Alto Contraste)
+            </label>
+
+            <label class="a11y-radio-label">
+              <input
+                type="radio"
+                name="a11y-theme"
+                value="alta-distincao"
+              />
+              Alta Distinção Cromática
+            </label>
+          </div>
+        </fieldset>
+      </div>
+    </dialog>
+
+    <!-- Scripts -->
+    <script type="module" src="./scripts/index.js"></script>
+  </body>
 </html>
