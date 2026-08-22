@@ -10,9 +10,9 @@ body {
   
   /* Respiro base nas bordas e fundo */
   padding: 2rem;
-  background-color: #F8FAFC; 
-  color: #0F172A; 
-  transition: font-size 0.3s ease, line-height 0.3s ease;
+  background-color: var(--a11y-bg-color);
+  color: var(--a11y-text-color);
+  transition: font-size 0.3s ease, line-height 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Redução de movimento e distrações */
