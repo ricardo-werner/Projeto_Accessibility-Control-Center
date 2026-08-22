@@ -1,7 +1,6 @@
 /* Estilos globais da aplicação, como tipografia, cores e espaçamentos. */
 
 /* styles/global.css */
-/* styles/global.css */
 
 body {
   /* Mantemos o que já tínhamos para a tipografia */
@@ -9,14 +8,24 @@ body {
   font-size: calc(var(--a11y-font-base-size) * var(--a11y-font-scale));
   line-height: var(--a11y-line-height-base);
   
-  /* NOVO: Adicionando um respiro base nas bordas e um fundo sutil para teste */
+  /* Respiro base nas bordas e fundo */
   padding: 2rem;
   background-color: #F8FAFC; 
   color: #0F172A; 
   transition: font-size 0.3s ease, line-height 0.3s ease;
 }
 
-/* Opcional: Uma classe utilitária de container para centralizar o conteúdo do main */
+/* Redução de movimento e distrações */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Classe utilitária de container para centralizar o conteúdo */
 .container {
   max-width: 1200px;
   margin: 0 auto;
