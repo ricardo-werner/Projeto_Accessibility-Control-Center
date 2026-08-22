@@ -9,43 +9,33 @@ import {
 const rootElement = document.documentElement;
 
 // Mapeia os atalhos para as alterações granulares nas variáveis CSS
+// scripts/accessibility-ui.js
+
+// scripts/accessibility-ui.js
+
 const applyCSSVariables = (state) => {
   // Facilitar Leitura
   if (state.quickSettings.readingEase) {
-    rootElement.style.setProperty(
-      '--font-family-current',
-      'var(--a11y-font-family-dyslexia)'
-    );
-    rootElement.style.setProperty(
-      '--a11y-line-height-base',
-      '1.8'
-    );
+    rootElement.style.setProperty('--font-family-current', 'var(--a11y-font-family-dyslexia)');
+    rootElement.style.setProperty('--a11y-line-height-base', '1.8');
   } else {
-    rootElement.style.setProperty(
-      '--font-family-current',
-      state.granular.fontFamily
-    );
-    rootElement.style.setProperty(
-      '--a11y-line-height-base',
-      state.granular.lineHeight
-    );
+    // Quando desativado, removemos o estilo inline para o :root voltar a agir
+    rootElement.style.removeProperty('--font-family-current');
+    rootElement.style.removeProperty('--a11y-line-height-base');
   }
 
-  // Aumentar Visibilidade (Aqui entraria as paletas de alto contraste posteriormente)
+  // Aumentar Visibilidade
   if (state.quickSettings.highVisibility) {
-    rootElement.style.setProperty(
-      '--a11y-font-scale',
-      '1.2'
-    );
-    rootElement.style.setProperty(
-      '--font-family-current',
-      'var(--a11y-font-family-hyperlegible)'
-    );
-  } else if (!state.quickSettings.readingEase) {
-    rootElement.style.setProperty(
-      '--a11y-font-scale',
-      state.granular.fontScale
-    );
+    rootElement.style.setProperty('--a11y-font-scale', '1.2');
+    rootElement.style.setProperty('--font-family-current', 'var(--a11y-font-family-hyperlegible)');
+  } else {
+    // Retorna para a escala definida pelo usuário (que faremos no slider)
+    rootElement.style.setProperty('--a11y-font-scale', state.granular.fontScale);
+    
+    // Só remove a fonte se a 'Facilitar Leitura' também estiver desligada
+    if (!state.quickSettings.readingEase) {
+      rootElement.style.removeProperty('--font-family-current');
+    }
   }
 };
 
