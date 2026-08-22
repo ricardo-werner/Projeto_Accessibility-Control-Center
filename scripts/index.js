@@ -6,6 +6,7 @@ import {
   initCustomSettings,
   initModal,
   initThemeSettings,
+  initResetButton
 } from './accessibility-ui.js';
 
 // Aguarda o DOM estar completamente carregado
@@ -24,4 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 5. Inicializa os motores de cores
   initThemeSettings();
+
+  // 6. Inicializa o botão de resetar as configurações
+  initResetButton();
 });
