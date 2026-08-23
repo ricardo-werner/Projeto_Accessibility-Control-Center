@@ -47,6 +47,13 @@
   --a11y-border-color: #c2410c;
 }
 
+[data-theme="dark"] {
+  --a11y-bg-color: #0F172A; /* Fundo: Azul Profundo (Paleta 1) */
+  --a11y-text-color: #F8FAFC; /* Texto: Cinza Gelo (Paleta 1) */
+  --a11y-primary-color: #2563EB; /* Destaques continuam azuis */
+  --a11y-border-color: #334155;
+}
+
 /* Quando aplicarmos no body da landing page: */
 body {
   font-family: var(--font-family-current);
