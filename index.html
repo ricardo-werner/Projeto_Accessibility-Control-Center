@@ -91,7 +91,11 @@
           Este é o conteúdo de teste para validarmos o
           contraste e a tipografia.
         </p>
-        <img src="./images/image 308.png" width="300rem" alt="Imagem de teste colorida gerada aleatoriamente">
+        <img
+          src="./images/image 308.png"
+          width="300rem"
+          alt="Imagem de teste colorida gerada aleatoriamente"
+        />
       </section>
     </main>
 
@@ -119,11 +123,28 @@
 
       <div class="a11y-modal-body">
         <!-- Primeira Fatia: Configuração Rápida -->
-        <!-- Dentro de <div class="a11y-modal-body"> no seu index.html -->
         <fieldset class="a11y-fieldset">
           <legend class="sr-only">
             Configurações Rápidas
           </legend>
+
+          <div class="a11y-switch-wrapper">
+            <span
+              id="label-dark-mode"
+              class="a11y-switch-label"
+              >Modo Escuro</span
+            >
+            <button
+              type="button"
+              id="btn-dark-mode"
+              class="a11y-switch-btn"
+              role="switch"
+              aria-checked="false"
+              aria-labelledby="label-dark-mode"
+            >
+              <span class="a11y-switch-thumb"></span>
+            </button>
+          </div>
 
           <div class="a11y-quick-settings-grid">
             <!-- Atalho 1: Facilitar Leitura (Foco em Dislexia e Carga Cognitiva) -->
@@ -268,7 +289,9 @@
 
       <!-- Rodapé do Modal: Reset -->
       <div class="a11y-modal-footer">
-        <button id="btn-reset-a11y" class="a11y-reset-btn">Restaurar Padrões</button>
+        <button id="btn-reset-a11y" class="a11y-reset-btn">
+          Restaurar Padrões
+        </button>
       </div>
     </dialog>
 
