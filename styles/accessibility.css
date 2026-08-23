@@ -37,6 +37,59 @@
   outline-offset: 4px;
 }
 
+/* Seção de Configurações Rápidas */
+.a11y-switch-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.a11y-switch-label {
+  font-weight: 500;
+  color: #0f172a;
+}
+
+/* O Botão Toggle Acessível */
+.a11y-switch-btn {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background-color: #cbd5e1;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.a11y-switch-btn[aria-checked="true"] {
+  background-color: #2563eb;
+}
+
+.a11y-switch-btn:focus-visible {
+  outline: 2px solid #06B6D4;
+  outline-offset: 2px;
+}
+
+.a11y-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.a11y-switch-btn[aria-checked="true"] .a11y-switch-thumb {
+  transform: translateX(20px);
+}
+
 /* ----------------------------- */
 /* 1. ESTRUTURA DO MODAL         */
 /* ----------------------------- */
@@ -269,3 +322,4 @@
   background-color: #f1f5f9;
   outline: 2px solid #06B6D4; /* Acessibilidade de teclado */
 }
+
