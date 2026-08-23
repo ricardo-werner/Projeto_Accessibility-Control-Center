@@ -146,7 +146,12 @@ export function initQuickSettings() {
 
 // Inicializa configurações personalizadas (sliders, granular)
 export function initCustomSettings() {
-  const slider = document.getElementById('font-scale-slider');
+  const slider = document.getElementById(
+    'font-scale-slider'
+  );
+  const btnVis = document.getElementById(
+    'btn-quick-visibility'
+  ); // 1. Capturamos o Botão 2
   const state = getState();
 
   if (slider) {
@@ -157,14 +162,30 @@ export function initCustomSettings() {
 
     slider.addEventListener('input', (event) => {
       const newScale = parseFloat(event.target.value);
+      const currentState = getState();
+      let isVisActive =
+        currentState.quickSettings.highVisibility;
 
+      // 2. A trava de segurança que havia sumido: se o Botão 2 estiver ligado, desliga ele!
+      if (isVisActive) {
+        isVisActive = false;
+        if (btnVis)
+          btnVis.setAttribute('aria-pressed', 'false'); // Atualiza o visual do botão
+      }
+
+      // 3. Salva a nova realidade no estado
       const updatedState = saveState({
+        quickSettings: {
+          ...currentState.quickSettings,
+          highVisibility: isVisActive, // Garante que o motor saiba que o botão 2 desligou
+        },
         granular: {
-          ...getState().granular,
+          ...currentState.granular,
           fontScale: newScale,
         },
       });
 
+      // 4. Manda o motor atualizar a tela
       applyCSSVariables(updatedState);
     });
   }
@@ -259,15 +280,71 @@ export function initThemeSettings() {
 }
 // Inicializa o botão de restauração das configurações padrão
 export function initResetButton() {
-  const btnReset = document.getElementById('btn-reset-a11y');
+  const btnReset = document.getElementById(
+    'btn-reset-a11y'
+  );
 
   if (btnReset) {
     btnReset.addEventListener('click', () => {
-      // 1. Sobrescreve o LocalStorage com o estado original zerado
-      saveState(defaultState);
+      // 1. Limpeza absoluta: destrói a chave do localStorage completamente
+      localStorage.removeItem('a11y_preferences');
 
-      // 2. Recarrega a página para limpar toda a árvore do DOM instantaneamente
+      // 2. Recarrega a página, simulando uma primeira visita virgem ao site
       window.location.reload();
     });
   }
+}
+
+export function initDarkModeToggle() {
+  const btnDark = document.getElementById('btn-dark-mode');
+  const rootElement = document.documentElement;
+  const themeRadios = document.querySelectorAll(
+    'input[name="a11y-theme"]'
+  );
+
+  if (!btnDark) return;
+
+  // 1. Sincroniza o botão ao carregar a página
+  const state = getState();
+  const isDark = state.granular.theme === 'dark';
+  btnDark.setAttribute('aria-checked', isDark);
+
+  // 2. Evento de Clique no Toggle
+  btnDark.addEventListener('click', () => {
+    const isCurrentlyDark =
+      btnDark.getAttribute('aria-checked') === 'true';
+    const newDarkState = !isCurrentlyDark;
+
+    // Atualiza o visual do botão
+    btnDark.setAttribute('aria-checked', newDarkState);
+
+    // Atualiza o tema da página
+    const newTheme = newDarkState ? 'dark' : 'default';
+    if (newDarkState) {
+      rootElement.setAttribute('data-theme', 'dark');
+    } else {
+      rootElement.removeAttribute('data-theme');
+    }
+
+    // REGRA DE CONFLITO: Se ligou o Modo Escuro, reseta os Radio Buttons para "Padrão"
+    themeRadios.forEach((radio) => {
+      if (radio.value === 'default') {
+        radio.checked = true;
+      }
+    });
+
+    // Salva no estado
+    saveState({
+      granular: { ...getState().granular, theme: newTheme },
+    });
+  });
+
+  // 3. REGRA DE CONFLITO REVERSA: Se o usuário clicar em uma Paleta, desliga o Modo Escuro
+  themeRadios.forEach((radio) => {
+    radio.addEventListener('change', (e) => {
+      if (e.target.value !== 'dark') {
+        btnDark.setAttribute('aria-checked', 'false');
+      }
+    });
+  });
 }
