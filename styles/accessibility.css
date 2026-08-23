@@ -91,6 +91,43 @@
 }
 
 /* ----------------------------- */
+/* AJUSTES DO MODO ESCURO        */
+/* ----------------------------- */
+
+/* 1. O Botão Principal (Gatilho) */
+[data-theme="dark"] .a11y-trigger-btn {
+  background-color: #06B6D4; /* Fundo Ciano */
+  color: #0F172A;            /* Texto escuro para contraste perfeito */
+  border: 1px solid transparent; 
+}
+
+/* Hover e Foco do Botão Principal */
+[data-theme="dark"] .a11y-trigger-btn:hover,
+[data-theme="dark"] .a11y-trigger-btn:focus-visible {
+  background-color: #F59E0B; /* Fundo Amarelo/Âmbar */
+  color: #0F172A;
+}
+
+/* 2. O Skip Link (Pular para o conteúdo) */
+[data-theme="dark"] .skip-link {
+  color: #06B6D4; /* Link fica ciano para dar leitura no fundo escuro */
+  padding: 0.75rem 1.5rem;
+  border-radius: 7px; /* Bordas arredondadas para harmonizar com o botão ao lado */
+  
+  /* Opcional: Remover o sublinhado, já que agora ele tem cara de botão no foco */
+  text-decoration: none; 
+  font-weight: 600;
+}
+
+/* Hover e Foco do Skip Link */
+[data-theme="dark"] .skip-link:hover,
+[data-theme="dark"] .skip-link:focus-visible {
+  background-color: #F59E0B; /* Fundo Amarelo/Âmbar */
+  color: #0F172A;            /* Inverte o texto para escuro */
+  outline: 2px solid #F59E0B; 
+}
+
+/* ----------------------------- */
 /* 1. ESTRUTURA DO MODAL         */
 /* ----------------------------- */
 .a11y-modal {
