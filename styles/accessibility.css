@@ -1,7 +1,5 @@
 /* Os estilos estruturais e visuais do próprio modal(layout, botões internos, accordions), garantindo que ele seja responsivo e limpo, isolando-o para não quebrar o CSS principal do site. Acessibilidade e usabilidade são prioridades, com foco em contraste, legibilidade e navegação intuitiva. */
 
-/* styles/accessibility.css */
-
 /* ----------------------------- */
 /* GATILHO DA CENTRAL (Botão de Abertura) */
 /* ----------------------------- */
@@ -91,6 +89,110 @@
 }
 
 /* ----------------------------- */
+/* WIDGET FLUTUANTE LATERAL      */
+/* ----------------------------- */
+.a11y-floating-widget {
+  position: fixed;
+  top: 50%; /* Centraliza verticalmente */
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 2px; /* Espaço mínimo entre os botões para parecer um bloco contínuo */
+  background-color: #0F172A; /* Cor de fundo da barra */
+  padding: 4px;
+  z-index: 9999; /* Garante que fique acima de tudo na página */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+/* Modificador: Lado Direito (Padrão) */
+.a11y-floating-widget.right-side {
+  right: 0;
+  border-radius: 8px 0 0 8px; /* Arredonda só os cantos da esquerda */
+}
+
+/* Modificador: Lado Esquerdo (Para você usar se precisar) */
+.a11y-floating-widget.left-side {
+  left: 0;
+  border-radius: 0 8px 8px 0; /* Arredonda só os cantos da direita */
+}
+
+/* Estilo dos Botões Internos */
+.widget-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.widget-btn:hover,
+.widget-btn:focus-visible {
+  background-color: #1E293B; /* Um azul um pouco mais claro para o hover */
+  outline: 2px solid #06B6D4;
+}
+
+/* Tamanho dos ícones */
+.widget-icon {
+  font-size: 1.5rem;
+}
+.widget-icon.img-icon {
+  width: 28px;
+  height: 28px;
+}
+
+/* ----------------------------- */
+/* SKIP LINK (Pular Conteúdo)    */
+/* ----------------------------- */
+
+/* 1. Estado Padrão (Invisível, mas acessível) */
+.skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0); /* Padrão clássico de invisibilidade */
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 2. Estado Focado (Quando o usuário aperta Tab) */
+.skip-link:focus,
+.skip-link:focus-visible {
+  /* Restaura o tamanho e remove o corte */
+  width: auto;
+  height: auto;
+  clip: auto;
+  overflow: visible;
+  margin: 0;
+  
+  /* Posicionamento no canto superior esquerdo */
+  top: 1rem;
+  left: 1rem;
+  z-index: 10000; /* Fica acima de absolutamente tudo na página */
+  
+  /* Estética do botão (harmonizado com o widget) */
+  padding: 0.75rem 1.5rem;
+  background-color: #0F172A; 
+  color: #06B6D4;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  
+  /* Contorno de alto contraste para garantir visibilidade */
+  outline: 3px solid #F59E0B; 
+  outline-offset: 2px;
+}
+
+/* ----------------------------- */
 /* AJUSTES DO MODO ESCURO        */
 /* ----------------------------- */
 
@@ -111,6 +213,7 @@
 /* 2. O Skip Link (Pular para o conteúdo) */
 [data-theme="dark"] .skip-link {
   color: #06B6D4; /* Link fica ciano para dar leitura no fundo escuro */
+  margin:1rem;
   padding: 0.75rem 1.5rem;
   border-radius: 7px; /* Bordas arredondadas para harmonizar com o botão ao lado */
   
