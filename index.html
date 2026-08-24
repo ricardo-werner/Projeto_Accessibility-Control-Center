@@ -86,6 +86,59 @@
         >
       </button>
 
+      <!-- Mini-modal de Voz -->
+      <dialog
+        id="voice-dialog"
+        class="voice-dialog"
+        aria-labelledby="voice-dialog-title"
+      >
+        <div class="voice-dialog-header">
+          <h3 id="voice-dialog-title">
+            Leitura em Voz Alta
+          </h3>
+          <button
+            id="btn-close-voice"
+            aria-label="Fechar configurações de voz"
+          >
+            ✕
+          </button>
+        </div>
+
+        <fieldset class="voice-options">
+          <legend class="sr-only">
+            Escolha o tipo de voz
+          </legend>
+          <!-- sr-only: oculto visualmente, lido por leitor de tela -->
+
+          <label class="voice-label">
+            <input
+              type="radio"
+              name="voice-gender"
+              value="female"
+              checked
+            />
+            Voz Feminina
+          </label>
+
+          <label class="voice-label">
+            <input
+              type="radio"
+              name="voice-gender"
+              value="male"
+            />
+            Voz Masculina
+          </label>
+        </fieldset>
+
+        <button
+          id="btn-toggle-play"
+          class="btn-primary"
+          aria-pressed="false"
+        >
+          ▶ Iniciar Leitura
+        </button>
+      </dialog>
+
       <!-- Botão de Libras (Para expansão futura) -->
       <button
         id="btn-libras"
