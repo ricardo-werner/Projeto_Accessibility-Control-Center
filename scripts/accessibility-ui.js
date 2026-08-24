@@ -378,3 +378,140 @@ export function initLibrasProxy() {
     });
   }
 }
+
+// export function initReadAloud() {
+//   const btnAudio = document.getElementById(
+//     'btn-read-aloud'
+//   );
+
+//   // Trava de segurança: verifica se o botão existe e se o navegador suporta a API de voz
+//   if (!btnAudio || !('speechSynthesis' in window)) {
+//     if (btnAudio) btnAudio.style.display = 'none'; // Esconde o botão se o navegador for muito antigo
+//     return;
+//   }
+
+//   let isSpeaking = false;
+
+//   btnAudio.addEventListener('click', () => {
+//     // FUNÇÃO DE PARAR: Se já estiver falando, o clique cancela o áudio
+//     if (isSpeaking || window.speechSynthesis.speaking) {
+//       window.speechSynthesis.cancel();
+//       isSpeaking = false;
+//       btnAudio.setAttribute('aria-pressed', 'false');
+//       btnAudio.style.backgroundColor = ''; // Restaura a cor original
+//       return;
+//     }
+
+//     // CAPTURA DE TEXTO: Busca a tag main que configuramos
+//     const contentArea = document.getElementById(
+//       'conteudo-principal'
+//     );
+
+//     // Fallback de segurança: se não achar a tag, tenta ler a página toda
+//     const textToRead = contentArea
+//       ? contentArea.innerText
+//       : document.body.innerText;
+
+//     if (!textToRead.trim()) return; // Não faz nada se não houver texto
+
+//     // CONFIGURAÇÃO DO MOTOR DE VOZ
+//     const utterance = new SpeechSynthesisUtterance(
+//       textToRead
+//     );
+//     utterance.lang = 'pt-BR'; // Força a pronúncia em Português do Brasil
+//     utterance.rate = 1.0; // Velocidade normal (0.8 seria mais lento, 1.2 mais rápido)
+//     utterance.pitch = 1.0; // Tom da voz normal
+
+//     // EVENTOS DE SINCRONIZAÇÃO (UX)
+//     // Quando terminar de ler naturalmente, reseta o botão
+//     utterance.onend = () => {
+//       isSpeaking = false;
+//       btnAudio.setAttribute('aria-pressed', 'false');
+//       btnAudio.style.backgroundColor = '';
+//     };
+
+//     // INICIA A LEITURA
+//     window.speechSynthesis.speak(utterance);
+//     isSpeaking = true;
+
+//     // Feedback visual de que está "Ligado" (Deixa o botão aceso)
+//     btnAudio.setAttribute('aria-pressed', 'true');
+//     btnAudio.style.backgroundColor = '#1E293B';
+//   });
+// }
+
+// scripts/accessibility-ui.js
+
+export function initReadAloud() {
+  const btnAudio = document.getElementById('btn-read-aloud');
+  
+  if (!btnAudio || !('speechSynthesis' in window)) return;
+
+  let isSpeaking = false;
+  let availableVoices = [];
+
+  // 1. Carrega e armazena a lista de vozes disponíveis no sistema/navegador
+  const loadVoices = () => {
+    availableVoices = window.speechSynthesis.getVoices();
+  };
+
+  loadVoices();
+  if (window.speechSynthesis.onvoiceschanged !== undefined) {
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+  }
+
+  // 2. Função auxiliar para selecionar a melhor voz feminina em pt-BR
+  const getFemalePtBrVoice = () => {
+    // Filtra todas as vozes em Português do Brasil
+    const ptVoices = availableVoices.filter(v => v.lang === 'pt-BR' || v.lang === 'pt_BR');
+    
+    // Nomes comuns de vozes femininas nos principais sistemas operacionais e navegadores
+    const femaleNames = ['maria', 'francisca', 'leticia', 'luciana', 'google português do brasil', 'female', 'mulher'];
+
+    // Tenta encontrar uma voz cujo nome contenha um dos identificadores femininos
+    const femaleVoice = ptVoices.find(voice => 
+      femaleNames.some(name => voice.name.toLowerCase().includes(name))
+    );
+
+    // Se encontrar a voz feminina, usa ela; caso contrário, pega a primeira voz pt-BR disponível
+    return femaleVoice || ptVoices[0] || null;
+  };
+
+  // 3. Evento de clique
+  btnAudio.addEventListener('click', () => {
+    if (isSpeaking || window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+      isSpeaking = false;
+      btnAudio.setAttribute('aria-pressed', 'false');
+      btnAudio.style.backgroundColor = '';
+      return;
+    }
+
+    const contentArea = document.getElementById('conteudo-principal');
+    const textToRead = contentArea ? contentArea.innerText : document.body.innerText;
+
+    if (!textToRead.trim()) return;
+
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    utterance.lang = 'pt-BR';
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+
+    // Aplica a voz selecionada
+    const selectedVoice = getFemalePtBrVoice();
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+    }
+
+    utterance.onend = () => {
+      isSpeaking = false;
+      btnAudio.setAttribute('aria-pressed', 'false');
+      btnAudio.style.backgroundColor = '';
+    };
+
+    window.speechSynthesis.speak(utterance);
+    isSpeaking = true;
+    btnAudio.setAttribute('aria-pressed', 'true');
+    btnAudio.style.backgroundColor = '#1E293B';
+  });
+}
