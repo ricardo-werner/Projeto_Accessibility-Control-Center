@@ -8,7 +8,8 @@ import {
   initThemeSettings,
   initResetButton,
   initDarkModeToggle,
-  initLibrasProxy
+  initLibrasProxy,
+  initReadAloud
 } from './accessibility-ui.js';
 
 // Aguarda o DOM estar completamente carregado
@@ -36,4 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Inicializa o Widget VLibras
   initLibrasProxy();
+
+  // Inicializa o Widget de Leitura em Voz Alta
+  initReadAloud();
 });
