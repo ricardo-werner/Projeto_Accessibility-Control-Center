@@ -147,6 +147,77 @@
 }
 
 /* ----------------------------- */
+/* MINI-MODAL DE VOZ             */
+/* ----------------------------- */
+.voice-dialog {
+  background-color: #0F172A; /* Fundo escuro */
+  color: #F8FAFC;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 16px;
+  width: 250px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  
+  /* Posicionamento: ajustado para aparecer ao lado do widget lateral */
+  margin: auto;
+  position: fixed;
+  right: 80px; 
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.voice-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4); /* Fundo levemente escurecido */
+}
+
+.voice-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 1rem;
+}
+
+#btn-close-voice {
+  background: none;
+  border: none;
+  color: #F8FAFC;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.voice-options {
+  border: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.voice-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+#btn-toggle-play {
+  width: 100%;
+  padding: 10px;
+  background-color: #2563EB;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#btn-toggle-play[aria-pressed="true"] {
+  background-color: #DC2626; /* Fica vermelho quando estiver tocando (Parar) */
+}
+
+/* ----------------------------- */
 /* INTEGRAÇÃO VLIBRAS (PROXY)    */
 /* ----------------------------- */
 
