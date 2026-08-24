@@ -4,6 +4,11 @@
 
 const STORAGE_KEY = 'a11y_preferences';
 
+// Inicializa o VLibras Widget
+  new window.VLibras.Widget('https://vlibras.gov.br/app');
+    
+
+
 // Nossa fonte única de verdade
 export const defaultState = {
   quickSettings: {
