@@ -7,7 +7,8 @@ import {
   initModal,
   initThemeSettings,
   initResetButton,
-  initDarkModeToggle
+  initDarkModeToggle,
+  initLibrasProxy
 } from './accessibility-ui.js';
 
 // Aguarda o DOM estar completamente carregado
@@ -32,4 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 7. Altera para a opção de personalização claro/escuro
   initDarkModeToggle();
+
+  // Inicializa o Widget VLibras
+  initLibrasProxy();
 });
