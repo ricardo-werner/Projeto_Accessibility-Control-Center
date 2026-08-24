@@ -21,13 +21,15 @@
     <meta
       http-equiv="Content-Security-Policy"
       content="
-        default-src 'self'; 
-        script-src 'self' https://vlibras.gov.br *.vlibras.gov.br https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval' blob:; 
-        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
-        font-src 'self' https://fonts.gstatic.com https://vlibras.gov.br https://cdn.jsdelivr.net; 
-        img-src 'self' data: https://vlibras.gov.br *.vlibras.gov.br https://cdn.jsdelivr.net; 
-        connect-src 'self' https://vlibras.gov.br *.vlibras.gov.br https://cdn.jsdelivr.net;
-        worker-src 'self' blob:;"
+        default-src 'self';
+        script-src 'self' https://vlibras.gov.br *.vlibras.gov.br https://cdn.jsdelivr.net https://us-assets.i.posthog.com 'unsafe-inline' 'unsafe-eval' blob:;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com https://vlibras.gov.br https://cdn.jsdelivr.net;
+        img-src 'self' data: https://vlibras.gov.br *.vlibras.gov.br https://cdn.jsdelivr.net;
+        connect-src 'self' https://vlibras.gov.br *.vlibras.gov.br https://cdn.jsdelivr.net https://us.i.posthog.com https://us-assets.i.posthog.com;
+        frame-src 'self' https://vlibras.gov.br;
+        worker-src 'self' blob:;
+      "
     />
 
     <!--SEO-->
@@ -61,27 +63,59 @@
 
   <body class="container">
     <!-- 1. SKIP LINK (Fica invisível no topo, aparece no Tab) -->
-    <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
+    <a href="#conteudo-principal" class="skip-link"
+      >Pular para o conteúdo principal</a
+    >
 
     <!-- 2. WIDGET LATERAL DE ACESSIBILIDADE -->
     <!-- Usamos a tag <aside> porque é um conteúdo complementar à página principal -->
-    <aside id="a11y-widget" class="a11y-floating-widget right-side" aria-label="Ferramentas de Acessibilidade">
-      
+    <aside
+      id="a11y-widget"
+      class="a11y-floating-widget right-side"
+      aria-label="Ferramentas de Acessibilidade"
+    >
       <!-- Botão de Voz -->
-      <button id="btn-read-aloud" class="widget-btn" aria-label="Ouvir a página" title="Ouvir a página">
-        <span aria-hidden="true" class="widget-icon">🔊</span>
+      <button
+        id="btn-read-aloud"
+        class="widget-btn"
+        aria-label="Ouvir a página"
+        title="Ouvir a página"
+      >
+        <span aria-hidden="true" class="widget-icon"
+          >🔊</span
+        >
       </button>
 
       <!-- Botão de Libras (Para expansão futura) -->
-      <button id="btn-libras" class="widget-btn" aria-label="Tradutor de Libras" title="Tradutor de Libras">
-        <!-- <span aria-hidden="true" class="widget-icon"></span> -->
+      <button
+        id="btn-libras"
+        class="widget-btn"
+        aria-label="Tradutor de Libras"
+        title="Tradutor de Libras"
+      >
+        <span aria-hidden="true" class="widget-icon">
+          <img
+            src="./images/libras-50.png"
+            alt="Ícone de Libras"
+          />
+        </span>
       </button>
 
       <!-- Botão da Central (Com a sua nova imagem) -->
-      <button id="btn-open-a11y" class="widget-btn" aria-haspopup="dialog" aria-label="Preferências de Acessibilidade" title="Preferências de Acessibilidade">
-        <img src="./images/a11y_isa_invertido.webp" alt="ícone acessibilidade_isa" aria-hidden="true" class="widget-icon img-icon">
+      <button
+        id="btn-open-a11y"
+        class="widget-btn"
+        aria-haspopup="dialog"
+        aria-label="Preferências de Acessibilidade"
+        title="Preferências de Acessibilidade"
+      >
+        <img
+          src="./images/a11y_isa_invertido.webp"
+          alt="ícone acessibilidade_isa"
+          aria-hidden="true"
+          class="widget-icon img-icon"
+        />
       </button>
-      
     </aside>
 
     <!-- 3. HEADER DA PÁGINA (Normal) -->
@@ -304,7 +338,7 @@
       </div>
     </dialog>
 
-        <!-- WIDGET VLIBRAS -->
+    <!-- WIDGET VLIBRAS -->
     <div vw class="enabled">
       <div vw-access-button class="active"></div>
       <div vw-plugin-wrapper>
