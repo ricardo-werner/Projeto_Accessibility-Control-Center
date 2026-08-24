@@ -125,7 +125,6 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  border: none;
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -145,6 +144,18 @@
 .widget-icon.img-icon {
   width: 28px;
   height: 28px;
+}
+
+/* ----------------------------- */
+/* INTEGRAÇÃO VLIBRAS (PROXY)    */
+/* ----------------------------- */
+
+/* Esconde o pacote nativo matematicamente, sem quebrar o motor 3D (WebGL) */
+#vlibras-access-wrapper {
+  opacity: 0 !important;
+  pointer-events: none !important; /* Impede que o mouse esbarre nele sem querer */
+  position: absolute !important;
+  left: -9999px !important; /* Joga o botão invisível para muito fora do monitor */
 }
 
 /* ----------------------------- */
