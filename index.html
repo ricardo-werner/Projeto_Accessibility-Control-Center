@@ -60,20 +60,29 @@
   </head>
 
   <body class="container">
-    <!-- 1. SKIP LINK: Essencial para acessibilidade motora e visual -->
-    <a href="#conteudo-principal" class="skip-link"
-      >Pular para o conteúdo principal</a
-    >
+    <!-- 1. SKIP LINK (Fica invisível no topo, aparece no Tab) -->
+    <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo principal</a>
 
-    <!-- 2. GATILHO DA CENTRAL: Primeiro elemento interativo após o skip link -->
-    <button
-      id="btn-open-a11y"
-      class="a11y-trigger-btn"
-      aria-haspopup="dialog"
-      aria-expanded="false"
-    >
-      Preferências de Acessibilidade
-    </button>
+    <!-- 2. WIDGET LATERAL DE ACESSIBILIDADE -->
+    <!-- Usamos a tag <aside> porque é um conteúdo complementar à página principal -->
+    <aside id="a11y-widget" class="a11y-floating-widget right-side" aria-label="Ferramentas de Acessibilidade">
+      
+      <!-- Botão de Voz -->
+      <button id="btn-read-aloud" class="widget-btn" aria-label="Ouvir a página" title="Ouvir a página">
+        <span aria-hidden="true" class="widget-icon">🔊</span>
+      </button>
+
+      <!-- Botão de Libras (Para expansão futura) -->
+      <button id="btn-libras" class="widget-btn" aria-label="Tradutor de Libras" title="Tradutor de Libras">
+        <!-- <span aria-hidden="true" class="widget-icon"></span> -->
+      </button>
+
+      <!-- Botão da Central (Com a sua nova imagem) -->
+      <button id="btn-open-a11y" class="widget-btn" aria-haspopup="dialog" aria-label="Preferências de Acessibilidade" title="Preferências de Acessibilidade">
+        <img src="./images/a11y_isa_invertido.webp" alt="ícone acessibilidade_isa" aria-hidden="true" class="widget-icon img-icon">
+      </button>
+      
+    </aside>
 
     <!-- 3. HEADER DA PÁGINA (Normal) -->
     <header>
@@ -295,7 +304,17 @@
       </div>
     </dialog>
 
+        <!-- WIDGET VLIBRAS -->
+    <div vw class="enabled">
+      <div vw-access-button class="active"></div>
+      <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+      </div>
+    </div>
+
     <!-- Scripts -->
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+
     <script type="module" src="./scripts/index.js"></script>
   </body>
 </html>
