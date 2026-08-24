@@ -64,4 +64,19 @@ strong, b {
   margin: 0 auto;
 }
 
+/* Esta garante a visibilidade do botão VLibras fique na camada mais alta, 
+    sobrescrevendo quaisquer estilos que o script do widget possa injetar */
+.vw-access-button.active {
+    position: fixed !important;
+    right: 30px !important;
+    bottom: 30px !important;
+    width: auto !important;
+    height: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    transform: none !important;
+    z-index: 99999 !important;
+}
+
 
