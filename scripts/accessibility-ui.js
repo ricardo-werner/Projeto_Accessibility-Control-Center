@@ -1,7 +1,11 @@
 // O motor da interação. Aqui construiremos funções essenciais de acessibilidade, como o controle de abertura e fechamento, a armadilha de foco (Focus trap) para quem navega por teclado, o retorno do foco ao botão de origem e o mapeamento dos eventos de clique.
 
 // scripts/accessibility-ui.js
-import { getState, saveState, defaultState } from './accessibility-state.js';
+import {
+  getState,
+  saveState,
+  defaultState,
+} from './accessibility-state.js';
 
 const rootElement = document.documentElement;
 
@@ -72,18 +76,29 @@ export const applyCSSVariables = (state) => {
 // Inicializa os botões e regras da Configuração Rápida
 export function initQuickSettings() {
   const btnRead = document.getElementById('btn-quick-read');
-  const btnVis = document.getElementById('btn-quick-visibility');
-  const btnFocus = document.getElementById('btn-quick-focus');
+  const btnVis = document.getElementById(
+    'btn-quick-visibility'
+  );
+  const btnFocus = document.getElementById(
+    'btn-quick-focus'
+  );
 
   const state = getState();
 
   // Sincroniza botões com o estado inicial
   if (btnRead) {
-    btnRead.setAttribute('aria-pressed', String(state.quickSettings.readingEase));
+    btnRead.setAttribute(
+      'aria-pressed',
+      String(state.quickSettings.readingEase)
+    );
     btnRead.addEventListener('click', () => {
-      const isPressed = btnRead.getAttribute('aria-pressed') === 'true';
+      const isPressed =
+        btnRead.getAttribute('aria-pressed') === 'true';
       const newState = !isPressed;
-      btnRead.setAttribute('aria-pressed', String(newState));
+      btnRead.setAttribute(
+        'aria-pressed',
+        String(newState)
+      );
 
       const updatedState = saveState({
         quickSettings: {
@@ -97,9 +112,13 @@ export function initQuickSettings() {
   }
 
   if (btnVis) {
-    btnVis.setAttribute('aria-pressed', String(state.quickSettings.highVisibility));
+    btnVis.setAttribute(
+      'aria-pressed',
+      String(state.quickSettings.highVisibility)
+    );
     btnVis.addEventListener('click', () => {
-      const isPressed = btnVis.getAttribute('aria-pressed') === 'true';
+      const isPressed =
+        btnVis.getAttribute('aria-pressed') === 'true';
       const newState = !isPressed;
       btnVis.setAttribute('aria-pressed', String(newState));
 
@@ -111,9 +130,13 @@ export function initQuickSettings() {
       });
 
       // Atualiza também o slider se existir
-      const slider = document.getElementById('font-scale-slider');
+      const slider = document.getElementById(
+        'font-scale-slider'
+      );
       if (slider) {
-        slider.value = newState ? '1.2' : String(updatedState.granular.fontScale);
+        slider.value = newState
+          ? '1.2'
+          : String(updatedState.granular.fontScale);
       }
 
       applyCSSVariables(updatedState);
@@ -126,9 +149,13 @@ export function initQuickSettings() {
       String(state.quickSettings.reducedDistraction)
     );
     btnFocus.addEventListener('click', () => {
-      const isPressed = btnFocus.getAttribute('aria-pressed') === 'true';
+      const isPressed =
+        btnFocus.getAttribute('aria-pressed') === 'true';
       const newState = !isPressed;
-      btnFocus.setAttribute('aria-pressed', String(newState));
+      btnFocus.setAttribute(
+        'aria-pressed',
+        String(newState)
+      );
 
       const updatedState = saveState({
         quickSettings: {
@@ -195,7 +222,9 @@ export function initCustomSettings() {
 export function initModal() {
   const modal = document.getElementById('a11y-modal');
   const btnOpen = document.getElementById('btn-open-a11y');
-  const btnClose = document.getElementById('btn-close-a11y');
+  const btnClose = document.getElementById(
+    'btn-close-a11y'
+  );
 
   if (!modal || !btnOpen || !btnClose) return;
 
@@ -241,39 +270,47 @@ export function initModal() {
 // scripts/accessibility-ui.js
 
 export function initThemeSettings() {
-  const themeRadios = document.querySelectorAll('input[name="a11y-theme"]');
+  const themeRadios = document.querySelectorAll(
+    'input[name="a11y-theme"]'
+  );
   const rootElement = document.documentElement;
-  
+
   // 1. Sincroniza a interface com as preferências salvas no localStorage
   const state = getState();
   const currentTheme = state.granular.theme || 'default';
-  
-  themeRadios.forEach(radio => {
+
+  themeRadios.forEach((radio) => {
     if (radio.value === currentTheme) {
       radio.checked = true;
     }
   });
-  
+
   // Aplica o tema visualmente logo ao carregar a página
   if (currentTheme !== 'default') {
     rootElement.setAttribute('data-theme', currentTheme);
   }
 
   // 2. Escuta quando o usuário escolhe uma nova paleta
-  themeRadios.forEach(radio => {
+  themeRadios.forEach((radio) => {
     radio.addEventListener('change', (e) => {
       const selectedTheme = e.target.value;
-      
+
       // Injeta ou remove o data-attribute na tag <html>
       if (selectedTheme !== 'default') {
-        rootElement.setAttribute('data-theme', selectedTheme);
+        rootElement.setAttribute(
+          'data-theme',
+          selectedTheme
+        );
       } else {
         rootElement.removeAttribute('data-theme');
       }
-      
+
       // Salva a decisão na nossa fonte única de verdade
       saveState({
-        granular: { ...getState().granular, theme: selectedTheme }
+        granular: {
+          ...getState().granular,
+          theme: selectedTheme,
+        },
       });
     });
   });
@@ -379,139 +416,136 @@ export function initLibrasProxy() {
   }
 }
 
-// export function initReadAloud() {
-//   const btnAudio = document.getElementById(
-//     'btn-read-aloud'
-//   );
-
-//   // Trava de segurança: verifica se o botão existe e se o navegador suporta a API de voz
-//   if (!btnAudio || !('speechSynthesis' in window)) {
-//     if (btnAudio) btnAudio.style.display = 'none'; // Esconde o botão se o navegador for muito antigo
-//     return;
-//   }
-
-//   let isSpeaking = false;
-
-//   btnAudio.addEventListener('click', () => {
-//     // FUNÇÃO DE PARAR: Se já estiver falando, o clique cancela o áudio
-//     if (isSpeaking || window.speechSynthesis.speaking) {
-//       window.speechSynthesis.cancel();
-//       isSpeaking = false;
-//       btnAudio.setAttribute('aria-pressed', 'false');
-//       btnAudio.style.backgroundColor = ''; // Restaura a cor original
-//       return;
-//     }
-
-//     // CAPTURA DE TEXTO: Busca a tag main que configuramos
-//     const contentArea = document.getElementById(
-//       'conteudo-principal'
-//     );
-
-//     // Fallback de segurança: se não achar a tag, tenta ler a página toda
-//     const textToRead = contentArea
-//       ? contentArea.innerText
-//       : document.body.innerText;
-
-//     if (!textToRead.trim()) return; // Não faz nada se não houver texto
-
-//     // CONFIGURAÇÃO DO MOTOR DE VOZ
-//     const utterance = new SpeechSynthesisUtterance(
-//       textToRead
-//     );
-//     utterance.lang = 'pt-BR'; // Força a pronúncia em Português do Brasil
-//     utterance.rate = 1.0; // Velocidade normal (0.8 seria mais lento, 1.2 mais rápido)
-//     utterance.pitch = 1.0; // Tom da voz normal
-
-//     // EVENTOS DE SINCRONIZAÇÃO (UX)
-//     // Quando terminar de ler naturalmente, reseta o botão
-//     utterance.onend = () => {
-//       isSpeaking = false;
-//       btnAudio.setAttribute('aria-pressed', 'false');
-//       btnAudio.style.backgroundColor = '';
-//     };
-
-//     // INICIA A LEITURA
-//     window.speechSynthesis.speak(utterance);
-//     isSpeaking = true;
-
-//     // Feedback visual de que está "Ligado" (Deixa o botão aceso)
-//     btnAudio.setAttribute('aria-pressed', 'true');
-//     btnAudio.style.backgroundColor = '#1E293B';
-//   });
-// }
-
-// scripts/accessibility-ui.js
-
 export function initReadAloud() {
-  const btnAudio = document.getElementById('btn-read-aloud');
-  
-  if (!btnAudio || !('speechSynthesis' in window)) return;
+  const btnOpenModal = document.getElementById(
+    'btn-read-aloud'
+  );
+  const voiceDialog =
+    document.getElementById('voice-dialog');
+  const btnCloseVoice = document.getElementById(
+    'btn-close-voice'
+  );
+  const btnTogglePlay = document.getElementById(
+    'btn-toggle-play'
+  );
+  const radiosGender =
+    document.getElementsByName('voice-gender');
+
+  if (
+    !btnOpenModal ||
+    !voiceDialog ||
+    !('speechSynthesis' in window)
+  )
+    return;
 
   let isSpeaking = false;
   let availableVoices = [];
 
-  // 1. Carrega e armazena a lista de vozes disponíveis no sistema/navegador
+  // Carrega as vozes do sistema
   const loadVoices = () => {
     availableVoices = window.speechSynthesis.getVoices();
   };
-
   loadVoices();
-  if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  if (
+    window.speechSynthesis.onvoiceschanged !== undefined
+  ) {
     window.speechSynthesis.onvoiceschanged = loadVoices;
   }
 
-  // 2. Função auxiliar para selecionar a melhor voz feminina em pt-BR
-  const getFemalePtBrVoice = () => {
-    // Filtra todas as vozes em Português do Brasil
-    const ptVoices = availableVoices.filter(v => v.lang === 'pt-BR' || v.lang === 'pt_BR');
-    
-    // Nomes comuns de vozes femininas nos principais sistemas operacionais e navegadores
-    const femaleNames = ['maria', 'francisca', 'leticia', 'luciana', 'google português do brasil', 'female', 'mulher'];
-
-    // Tenta encontrar uma voz cujo nome contenha um dos identificadores femininos
-    const femaleVoice = ptVoices.find(voice => 
-      femaleNames.some(name => voice.name.toLowerCase().includes(name))
+  // Lógica inteligente para buscar vozes por gênero
+  const getSelectedVoice = (genderPreference) => {
+    const ptVoices = availableVoices.filter(
+      (v) => v.lang === 'pt-BR' || v.lang === 'pt_BR'
     );
 
-    // Se encontrar a voz feminina, usa ela; caso contrário, pega a primeira voz pt-BR disponível
-    return femaleVoice || ptVoices[0] || null;
+    // Arrays de nomes comuns nas engines de TTS
+    const femaleNames = [
+      'maria',
+      'francisca',
+      'luciana',
+      'leticia',
+      'google português do brasil',
+      'female',
+    ];
+    const maleNames = [
+      'daniel',
+      'felipe',
+      'antonio',
+      'humberto',
+      'male',
+    ];
+
+    const targetNames =
+      genderPreference === 'female'
+        ? femaleNames
+        : maleNames;
+
+    const matchedVoice = ptVoices.find((voice) =>
+      targetNames.some((name) =>
+        voice.name.toLowerCase().includes(name)
+      )
+    );
+
+    return matchedVoice || ptVoices[0] || null;
   };
 
-  // 3. Evento de clique
-  btnAudio.addEventListener('click', () => {
+  // Abre e fecha o mini-modal
+  btnOpenModal.addEventListener('click', () => {
+    voiceDialog.showModal();
+  });
+
+  btnCloseVoice.addEventListener('click', () => {
+    voiceDialog.close();
+  });
+
+  // Fecha o modal ao clicar fora dele (no backdrop)
+  voiceDialog.addEventListener('click', (e) => {
+    if (e.target === voiceDialog) voiceDialog.close();
+  });
+
+  // Lógica de Play / Stop
+  btnTogglePlay.addEventListener('click', () => {
     if (isSpeaking || window.speechSynthesis.speaking) {
-      window.speechSynthesis.cancel();
+      window.speechSynthesis.cancel(); // Para a leitura
       isSpeaking = false;
-      btnAudio.setAttribute('aria-pressed', 'false');
-      btnAudio.style.backgroundColor = '';
+      btnTogglePlay.setAttribute('aria-pressed', 'false');
+      btnTogglePlay.innerText = '▶ Iniciar Leitura';
       return;
     }
 
-    const contentArea = document.getElementById('conteudo-principal');
-    const textToRead = contentArea ? contentArea.innerText : document.body.innerText;
-
+    const contentArea = document.getElementById(
+      'conteudo-principal'
+    );
+    const textToRead = contentArea
+      ? contentArea.innerText
+      : document.body.innerText;
     if (!textToRead.trim()) return;
 
-    const utterance = new SpeechSynthesisUtterance(textToRead);
+    const utterance = new SpeechSynthesisUtterance(
+      textToRead
+    );
     utterance.lang = 'pt-BR';
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
 
-    // Aplica a voz selecionada
-    const selectedVoice = getFemalePtBrVoice();
-    if (selectedVoice) {
-      utterance.voice = selectedVoice;
-    }
+    // Descobre qual rádio está selecionado (male ou female)
+    let selectedGender = 'female';
+    radiosGender.forEach((radio) => {
+      if (radio.checked) selectedGender = radio.value;
+    });
 
+    // Aplica a voz
+    const chosenVoice = getSelectedVoice(selectedGender);
+    if (chosenVoice) utterance.voice = chosenVoice;
+
+    // Quando terminar a leitura naturalmente
     utterance.onend = () => {
       isSpeaking = false;
-      btnAudio.setAttribute('aria-pressed', 'false');
-      btnAudio.style.backgroundColor = '';
+      btnTogglePlay.setAttribute('aria-pressed', 'false');
+      btnTogglePlay.innerText = '▶ Iniciar Leitura';
     };
 
     window.speechSynthesis.speak(utterance);
     isSpeaking = true;
-    btnAudio.setAttribute('aria-pressed', 'true');
-    btnAudio.style.backgroundColor = '#1E293B';
+    btnTogglePlay.setAttribute('aria-pressed', 'true');
+    btnTogglePlay.innerText = '⏹ Parar Leitura';
   });
 }
