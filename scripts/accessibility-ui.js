@@ -348,3 +348,33 @@ export function initDarkModeToggle() {
     });
   });
 }
+
+export function initLibrasProxy() {
+  const customBtnLibras =
+    document.getElementById('btn-libras');
+
+  if (customBtnLibras) {
+    customBtnLibras.addEventListener('click', () => {
+      const vlibrasWrapper = document.getElementById(
+        'vlibras-access-wrapper'
+      );
+
+      // 1. Verifica se o wrapper e o Shadow DOM existem
+      if (vlibrasWrapper && vlibrasWrapper.shadowRoot) {
+        // 2. Perfura o Shadow DOM e captura o botão interno pelo ID inspecionado
+        const btnNativo =
+          vlibrasWrapper.shadowRoot.getElementById(
+            'vlibras-button'
+          );
+
+        if (btnNativo) {
+          btnNativo.click(); // 3. Dispara o clique fantasma!
+        }
+      } else {
+        console.warn(
+          'O VLibras ainda não foi carregado ou o Shadow DOM está inacessível.'
+        );
+      }
+    });
+  }
+}
