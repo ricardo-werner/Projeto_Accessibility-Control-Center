@@ -1,4 +1,4 @@
-# <img src="./images/a11y_isa_invertido.webp" alt="ícone acessibilidade_isa" width="40" height="40" />  Projeto D.I.A. – Desenvolvimento Inclusivo e Acessível
+# <img src="./assets/images/a11y_isa_invertido.webp" alt="ícone acessibilidade_isa" width="40" height="40" />  Projeto D.I.A. – Desenvolvimento Inclusivo e Acessível
 
 > Laboratório prático e escalável dedicado à implementação de padrões rigorosos de Acessibilidade Digital (A11Y), focado em Design Universal, controle de estado, integrações multimodais e aderência às diretrizes WCAG.
 
@@ -7,14 +7,42 @@
                 <tr>
                         <td align="center" width="50%">
                                 <figure>
-                                        <img src="./assets/to_readme/layout_padrao.png" width="400" alt="Captura de tela mostrando o layout padrão da página sem ajustes de acessibilidade">
+                                        <img src="./assets/to_readme/inicial.PNG" width="500" alt="Captura de tela mostrando o layout padrão da página sem ajustes de acessibilidade">
                                         <figcaption><strong>Versão Base (Padrão)</strong></figcaption>
                                 </figure>
                         </td>
                         <td align="center" width="50%">
                                 <figure>
-                                        <img src="./assets/to_readme/layout_acessivel.png" width="400" alt="Captura de tela mostrando o modo de contraste universal ativado e o widget flutuante de acessibilidade visível">
+                                        <img src="./assets/to_readme/libras.PNG" width="500" alt="Captura de tela mostrando o modal para tradução em Libras com o avatar 3D renderizado">
+                                        <figcaption><strong>Versão Tradução em Libras Ativa</strong></figcaption>
+                                </figure>
+                        </td>
+                </tr>
+                <tr>
+                        <td align="center" width="50%">
+                                <figure>
+                                        <img src="./assets/to_readme/person_1.PNG" width="500" alt="Captura de tela mostrando o modo de personalização para a acessibilidade">
                                         <figcaption><strong>Versão com Acessibilidade Ativa</strong></figcaption>
+                                </figure>
+                        </td>
+                        <td align="center" width="50%">
+                                <figure>
+                                        <img src="./assets/to_readme/person_2.PNG" width="500" alt="Captura de tela mostrando o modo de personalização para a acessibilidade ">
+                                        <figcaption><strong>Versão com Acessibilidade Ativa</strong></figcaption>
+                                </figure>
+                        </td>
+                </tr>
+                <tr>
+                        <td align="center" width="50%">
+                                <figure>
+                                        <img src="./assets/to_readme/voz_1.PNG" width="500" alt="Captura de tela mostrando o modo de configuração do tipo de voz para leitura em voz alta">
+                                        <figcaption><strong>Versão Leitura em Voz Alta Ativa</strong></figcaption>
+                                </figure>
+                        </td>
+                        <td align="center" width="50%">
+                                <figure>
+                                        <img src="./assets/to_readme/voz_2.PNG" width="500" alt="Captura de tela mostrando o modo de botão para parar o modo de leitura em voz alta">
+                                        <figcaption><strong>Versão Leitura em Voz Alta Desativado</strong></figcaption>
                                 </figure>
                         </td>
                 </tr>
@@ -129,8 +157,7 @@ O estado atual possui o botão de
 ┌─────────────────────────────┐
 │ 2. Sincronização Geral      │
 └─────────────────────────────┘
-Salva o novo estado e despacha a 
-atualização para o DOM.
+Salva o novo estado e despacha a atualização para o DOM.
 ```
 Essa abordagem garante que ajustes granulares assumam prioridade sobre atalhos rápidos, mantendo a consistência visual.
 
@@ -148,7 +175,7 @@ Essa abordagem garante que ajustes granulares assumam prioridade sobre atalhos r
 
 - **Cenário 3 – Interação Multimodal (Voz e Libras):**
   - **Ação:** Acionamento do Text-to-Speech e tradutor 3D.
-  - **Resultado:** O usuário seleciona o gênero da voz via popover. Ao iniciar, a interface reage convertendo o gatilho em um botão de interrupção claro (X). Simultaneamente, o avatar de Libras opera perfeitamente ancorado às políticas de segurança (CSP) estabelecidas.
+  - **Resultado:** O usuário seleciona o gênero da voz via popover. Ao iniciar, a interface reage convertendo o gatilho em um botão de interrupção claro (X). Simultaneamente, o avatar de Libras opera perfeitamente ancorado às políticas de segurança (CSP).
 
 ---
 
@@ -158,21 +185,32 @@ Essa abordagem garante que ajustes granulares assumam prioridade sobre atalhos r
 PROJETO_DIA_A11Y/
 
 ├── assets/
-│   ├── css/
-│   │   ├── accessibility.css
-│   │   ├── reset.css
-│   │   ├── style.css
-│   │   └── variables.css
+│   ├── images/
+│   │   ├── a11y_isa_invertido.webp
+│   │   ├── creativflyers.jpg
+│   │   └── libras-50.png
 │   └── to_readme/
-│       ├── acessibilidade_isa.png
-│       ├── layout_padrao.png
-│       └── layout_acessivel.png
+│       ├── inicial.PNG
+│       ├── libras.PNG
+│       ├── person_1.PNG
+│       ├── person_2.PNG
+│       ├── voz_1.PNG
+│       └── voz_2.PNG
 │
 ├── scripts/
 │   ├── accessibility-state.js
 │   ├── accessibility-ui.js
 │   └── index.js
 │
+├── styles/
+│   ├── accessibility.css
+│   ├── global.css
+│   ├── index.css
+│   ├── reset.css
+│   └── variables.css
+│
+├── .gitignore
+├── definitions.md
 ├── index.html
 └── README.md
 ```
