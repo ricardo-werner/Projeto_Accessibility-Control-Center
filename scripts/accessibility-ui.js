@@ -431,6 +431,13 @@ export function initReadAloud() {
   const radiosGender =
     document.getElementsByName('voice-gender');
 
+  // Captura o elemento do ícone dentro do botão lateral
+  const iconSpan = btnOpenModal
+    ? btnOpenModal.querySelector('.widget-icon')
+    : null;
+  // Guarda o ícone original (o alto-falante) para poder restaurar depois
+  const originalIcon = iconSpan ? iconSpan.innerText : '🔊';
+
   if (
     !btnOpenModal ||
     !voiceDialog ||
@@ -441,7 +448,6 @@ export function initReadAloud() {
   let isSpeaking = false;
   let availableVoices = [];
 
-  // Carrega as vozes do sistema
   const loadVoices = () => {
     availableVoices = window.speechSynthesis.getVoices();
   };
@@ -452,13 +458,10 @@ export function initReadAloud() {
     window.speechSynthesis.onvoiceschanged = loadVoices;
   }
 
-  // Lógica inteligente para buscar vozes por gênero
   const getSelectedVoice = (genderPreference) => {
     const ptVoices = availableVoices.filter(
       (v) => v.lang === 'pt-BR' || v.lang === 'pt_BR'
     );
-
-    // Arrays de nomes comuns nas engines de TTS
     const femaleNames = [
       'maria',
       'francisca',
@@ -474,51 +477,50 @@ export function initReadAloud() {
       'humberto',
       'male',
     ];
-
     const targetNames =
       genderPreference === 'female'
         ? femaleNames
         : maleNames;
-
     const matchedVoice = ptVoices.find((voice) =>
       targetNames.some((name) =>
         voice.name.toLowerCase().includes(name)
       )
     );
-
     return matchedVoice || ptVoices[0] || null;
   };
 
-  // Abre e fecha o mini-modal
+  // 1. CLIQUE NO BOTÃO LATERAL
   btnOpenModal.addEventListener('click', () => {
+    // Se estiver lendo, funciona como STOP
+    if (isSpeaking || window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+      isSpeaking = false;
+      btnOpenModal.setAttribute('aria-pressed', 'false');
+      btnOpenModal.style.backgroundColor = ''; // Restaura a cor
+      if (iconSpan) iconSpan.innerText = originalIcon; // Restaura o ícone original
+      return;
+    }
+
+    // Se não estiver lendo, abre o modal
     voiceDialog.showModal();
   });
 
-  btnCloseVoice.addEventListener('click', () => {
-    voiceDialog.close();
-  });
-
-  // Fecha o modal ao clicar fora dele (no backdrop)
+  btnCloseVoice.addEventListener('click', () =>
+    voiceDialog.close()
+  );
   voiceDialog.addEventListener('click', (e) => {
     if (e.target === voiceDialog) voiceDialog.close();
   });
 
-  // Lógica de Play / Stop
+  // 2. CLIQUE NO BOTÃO DE INICIAR (DENTRO DO MODAL)
   btnTogglePlay.addEventListener('click', () => {
-    if (isSpeaking || window.speechSynthesis.speaking) {
-      window.speechSynthesis.cancel(); // Para a leitura
-      isSpeaking = false;
-      btnTogglePlay.setAttribute('aria-pressed', 'false');
-      btnTogglePlay.innerText = '▶ Iniciar Leitura';
-      return;
-    }
-
     const contentArea = document.getElementById(
       'conteudo-principal'
     );
     const textToRead = contentArea
       ? contentArea.innerText
       : document.body.innerText;
+
     if (!textToRead.trim()) return;
 
     const utterance = new SpeechSynthesisUtterance(
@@ -526,26 +528,32 @@ export function initReadAloud() {
     );
     utterance.lang = 'pt-BR';
 
-    // Descobre qual rádio está selecionado (male ou female)
     let selectedGender = 'female';
     radiosGender.forEach((radio) => {
       if (radio.checked) selectedGender = radio.value;
     });
 
-    // Aplica a voz
     const chosenVoice = getSelectedVoice(selectedGender);
     if (chosenVoice) utterance.voice = chosenVoice;
 
-    // Quando terminar a leitura naturalmente
+    // EVENTO: Quando a leitura terminar naturalmente
     utterance.onend = () => {
       isSpeaking = false;
-      btnTogglePlay.setAttribute('aria-pressed', 'false');
-      btnTogglePlay.innerText = '▶ Iniciar Leitura';
+      btnOpenModal.setAttribute('aria-pressed', 'false');
+      btnOpenModal.style.backgroundColor = ''; // Restaura a cor
+      if (iconSpan) iconSpan.innerText = originalIcon; // Restaura o ícone original
     };
 
+    // INICIA A FALA
     window.speechSynthesis.speak(utterance);
     isSpeaking = true;
-    btnTogglePlay.setAttribute('aria-pressed', 'true');
-    btnTogglePlay.innerText = '⏹ Parar Leitura';
+
+    // ATUALIZA O BOTÃO LATERAL (Cor e Ícone)
+    btnOpenModal.setAttribute('aria-pressed', 'true');
+    btnOpenModal.style.backgroundColor = '#DC2626'; // Vermelho
+    if (iconSpan) iconSpan.innerText = '✖'; // Muda para X (ou ⏹)
+
+    // Fecha o modal automaticamente
+    voiceDialog.close();
   });
 }
