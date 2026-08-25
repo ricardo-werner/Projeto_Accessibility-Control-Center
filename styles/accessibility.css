@@ -141,9 +141,9 @@
 .widget-icon {
   font-size: 1.5rem;
 }
-.widget-icon.img-icon {
-  width: 28px;
-  height: 28px;
+.widget-icon.img {
+  width: 38px;
+  height: 38px;
 }
 
 /* ----------------------------- */
