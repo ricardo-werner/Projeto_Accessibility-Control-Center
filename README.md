@@ -1,6 +1,6 @@
-# ♿ Projeto D.I.A. – Desenvolvimento Inclusivo e Acessível
+# <img src="./images/a11y_isa_invertido.webp" alt="ícone acessibilidade_isa" width="40" height="40" />  Projeto D.I.A. – Desenvolvimento Inclusivo e Acessível
 
-> Laboratório prático e escalável dedicado à implementação de padrões rigorosos de Acessibilidade Digital (A11Y), focado em Design Universal, controle de estado e aderência às diretrizes WCAG.
+> Laboratório prático e escalável dedicado à implementação de padrões rigorosos de Acessibilidade Digital (A11Y), focado em Design Universal, controle de estado, integrações multimodais e aderência às diretrizes WCAG.
 
 <table align="center">
         <tbody>
@@ -39,6 +39,7 @@ Na web moderna, a acessibilidade frequentemente esbarra em:
 - Conflitos de contraste em implementações falhas de *Dark Mode* (Efeito Camuflagem).
 - Barreiras de navegação por teclado (falta de *Skip Links* ou quebra de foco).
 - Carga cognitiva excessiva devido a animações ininterruptas.
+- Ausência de suporte multimodal nativo (dependência de softwares de terceiros caros ou complexos para leitura de tela).
 - Perda de configurações de acessibilidade ao recarregar a página.
 
 ---
@@ -50,6 +51,8 @@ A Central de Acessibilidade atua como um **motor de renderização inclusivo**, 
 - Inverter e aplicar paletas de cores validadas (Nível AAA).
 - Alternar escalas tipográficas e famílias de fontes especializadas.
 - Paralisar mídias e animações para reduzir sobrecarga sensorial.
+- Fornecer leitura em voz alta nativa (Text-to-Speech) com controle de gênero (Voz Feminina/Masculina) e interface de baixa fricção.
+- Acionar tradução para Libras (VLibras) respeitando a identidade visual local.
 - Proteger o fluxo de navegação por teclado (Focus Trap).
 - Persistir as preferências do usuário na memória do navegador.
 
@@ -66,6 +69,8 @@ Widget Flutuante Universal
    ├── Motor de CSS Variables (Temas)
    ├── Controle Tipográfico (Escala Rem)
    ├── Filtros Sensoriais (Animações/Mídia)
+   ├── Máquina de Estados (TTS Inteligente)
+   ├── Integração Proxy (VLibras)
    └── Gerenciador de Conflitos de UX
    │
    ▼
@@ -73,30 +78,35 @@ Widget Flutuante Universal
    │
    ▼
 Interface Renderizada e Acessível
+```
 
-🧠 Pilares Técnicos
+---
+
+## 🧠 Pilares Técnicos
+
 A camada de acessibilidade é dividida em módulos focados em responsabilidade única:
 
-UI & Navegação
-Widget Flutuante: Uso da tag <aside> para um painel lateral persistente, utilizando o Símbolo de Acessibilidade Universal da ONU.
+### 🧭 UI & Navegação
+- **Widget Flutuante:** Uso da tag `<aside>` para um painel lateral persistente, utilizando o Símbolo de Acessibilidade Universal da ONU.
+- **Skip Link Oculto:** Aplicação da técnica *Visually Hidden*. O link intercepta o primeiro Tab da página para pular o cabeçalho, tornando-se visível apenas quando focado.
+- **Modais Semânticos:** Uso da tag nativa `<dialog>` tanto para a Central Principal quanto para o seletor de Voz, garantindo isolamento nativo (*Focus Trap*) e escurecimento do fundo via `::backdrop`.
 
-Skip Link Oculto: Aplicação da técnica Visually Hidden. O link intercepta o primeiro Tab da página para pular o cabeçalho, tornando-se visível apenas quando focado.
+### 🎨 Gestão de Estilos e UX (CSS)
+- **Prevenção de Camuflagem:** Regras rigorosas de inversão de cor em botões primários durante a ativação do Modo Escuro.
+- **Aderência à WCAG 1.4.1 (Uso da Cor):** O botão de interrupção de áudio altera simultaneamente a cor (vermelho de alerta) e a forma (ícone "X"), garantindo compreensão universal independente de daltonismo.
 
-Modal Semântico: Implementado com a tag <dialog>, garantindo isolamento nativo (Focus Trap) e escurecimento do fundo com ::backdrop.
+### 🔒 Integração e Segurança (Trade-offs)
+- **Motor de Voz Híbrido (State Machine):** A interface da Web Speech API foi desenhada com estado duplo. Em repouso, aciona um mini-modal para seleção de gênero (varredura dinâmica de vozes do SO). Em atividade, o modal é suprimido e o gatilho principal converte-se em um botão de interrupção instantânea (Stop), reduzindo a carga cognitiva.
+- **Integração VLibras via Padrão Proxy:** Ocultação do widget governamental original através de regras matemáticas de CSS (`opacity: 0` e deslocamento, preservando o motor WebGL) e delegação de eventos `.click()` a partir do próprio Design System.
+- **Segurança (CSP Rigoroso):** Configuração cirúrgica do cabeçalho *Content-Security-Policy*, autorizando conexões específicas (jsDelivr, frame-src) necessárias para a renderização do avatar 3D, blindando a aplicação contra injeções.
 
-Gestão de Estilos (CSS)
-Manipulação global no :root via atributo data-theme.
+---
 
-Prevenção de Camuflagem: Regras rigorosas de inversão de cor em botões primários durante a ativação do Modo Escuro.
+## 🌳 Lógica de Resolução de Conflitos
 
-Persistência e Estado (JS)
-Motor centralizado de getState() e saveState() comunicando-se com o localStorage.
+O mecanismo do projeto utiliza árvores de decisão para evitar sobreposição de regras conflitantes na interface:
 
-Função de Reset Absoluto (removeItem) para limpeza limpa de cache, simulando uma visita inédita.
-
-🌳 Lógica de Resolução de Conflitos
-O mecanismo do projeto utiliza uma árvore de decisão para evitar sobreposição de regras conflitantes na interface.
-
+```text
 [Input do Usuário: Slider de Fonte]
         │
         ▼
@@ -121,21 +131,30 @@ O estado atual possui o botão de
 └─────────────────────────────┘
 Salva o novo estado e despacha a 
 atualização para o DOM.
+```
+Essa abordagem garante que ajustes granulares assumam prioridade sobre atalhos rápidos, mantendo a consistência visual.
 
-Essa abordagem garante que ajustes granulares (como um controle deslizante) assumam prioridade sobre atalhos rápidos, mantendo a consistência (Única Fonte de Verdade).
+---
 
-🧪 Cenários de Validação (Testes)
-Para garantir a eficiência da ferramenta, as seguintes validações foram aplicadas:
+## 🧪 Cenários de Validação (Testes)
 
-Cenário 1 – Navegação Inclusiva (Teclado)
-Ação: Usuário navega exclusivamente com a tecla Tab.
-Resultado: O foco revela o Skip Link, passa suavemente pelos controles do Widget Flutuante e, ao abrir a Central, fica "preso" dentro do Modal até ser fechado com Esc ou pelo botão nativo.
+- **Cenário 1 – Navegação Inclusiva (Teclado):**
+  - **Ação:** Usuário navega exclusivamente com a tecla Tab.
+  - **Resultado:** O foco revela o Skip Link, passa suavemente pelos controles do Widget Flutuante e, ao abrir a Central, fica "preso" dentro do Modal até ser fechado com Esc.
 
-Cenário 2 – Carga Cognitiva
-Ação: Ativação do modo "Reduzir Distrações".
-Resultado: O CSS injeta variáveis que pausam animation-play-state, desativam transições abruptas e aplicam filtro sépia em todas as imagens (ex: pratos de comida) para estabilidade visual.
+- **Cenário 2 – Carga Cognitiva:**
+  - **Ação:** Ativação do modo "Reduzir Distrações".
+  - **Resultado:** O CSS injeta variáveis que pausam `animation-play-state`, desativam transições abruptas e aplicam filtro sépia nas imagens para estabilidade visual.
 
-📁 Estrutura do Projeto
+- **Cenário 3 – Interação Multimodal (Voz e Libras):**
+  - **Ação:** Acionamento do Text-to-Speech e tradutor 3D.
+  - **Resultado:** O usuário seleciona o gênero da voz via popover. Ao iniciar, a interface reage convertendo o gatilho em um botão de interrupção claro (X). Simultaneamente, o avatar de Libras opera perfeitamente ancorado às políticas de segurança (CSP) estabelecidas.
+
+---
+
+## 📁 Estrutura do Projeto
+
+```text
 PROJETO_DIA_A11Y/
 
 ├── assets/
@@ -156,31 +175,36 @@ PROJETO_DIA_A11Y/
 │
 ├── index.html
 └── README.md
+```
 
-Acessibilidade e Inclusão
+---
+
+## ♿ Acessibilidade e Inclusão
+
 Este projeto não apenas apresenta configurações, mas é construído sob boas práticas rígidas:
 
-HTML 100% semântico e estruturado.
+- HTML 100% semântico e estruturado.
+- Forte aplicação de atributos WAI-ARIA (`aria-expanded`, `aria-pressed`, `aria-haspopup`, `role="switch"`).
+- Contraste validado em níveis WCAG AA e AAA.
+- Preparação de affordance visual (espaçamento de clique, contornos de foco espessos).
+- Atendimento às diretrizes de Uso da Cor (WCAG 1.4.1).
 
-Forte aplicação de atributos WAI-ARIA (aria-expanded, aria-pressed, aria-haspopup, role="switch").
+---
 
-Contraste validado em níveis WCAG AA e AAA.
+## 🚀 Próximas Evoluções
 
-Preparação de affordance visual (espaçamento de clique, contornos de foco espessos).
+- Refatoração da lógica de Vanilla JS para componentização no ecossistema React.
+- Criação de testes automatizados com Cypress e axe-core.
 
-🚀 Próximas Evoluções
-Implementação do motor de voz (Text-to-Speech) integrado à Web Speech API.
+---
 
-Integração de avatar tradutor de Libras (VLibras).
+## 📄 Licença
 
-Refatoração da lógica de Vanilla JS para componentização em React.
-
-Criação de testes automatizados com Cypress e axe-core.
-
-📄 Licença
 Projeto desenvolvido como laboratório contínuo de Acessibilidade Digital e boas práticas de Front-End.
 
-👨‍💻 Autor
-Ricardo Werner
+---
 
-Desenvolvedor Front-End, unindo acessibilidade, inclusão digital e UX a 30+ anos de vivência em Gestão e Negócios corporativos.
+## 👨‍💻 Autor
+
+**Ricardo Werner**  
+Desenvolvedor Front-End, unindo acessibilidade, inclusão digital e UX a 30+ anos de vivência em gestão de negócios e operações corporativas.
